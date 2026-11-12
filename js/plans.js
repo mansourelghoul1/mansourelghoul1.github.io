@@ -6,11 +6,11 @@ window.GHOUL_PLANS = {
   defaultDuration: 3,
   popular: "popular",
   plans: [
-    { id: "basic", name: "BASIC",
-      prices: { 1: 399, 3: 999, 6: 1799, 12: 3299 },
+    // BASIC is a one-time program, not a subscription: one price, no length to pick.
+    { id: "basic", name: "BASIC", oneTime: true, price: 399,
       features: {
-        ar: ["برنامج تمرين معمول ليك", "توجيه في التمرين", "متابعة تقدمك"],
-        en: ["Customized training program", "Training guidance", "Progress tracking"] } },
+        ar: ["برنامج تمرين معمول ليك من إجاباتك", "كل تمرين متشرح بالتفصيل", "من غير متابعة أسبوعية"],
+        en: ["A training program made for you from your answers", "Every exercise explained in detail", "No weekly check-ins"] } },
     { id: "popular", name: "MOST POPULAR",
       prices: { 1: 799, 3: 2199, 6: 3999, 12: 7499 },
       features: {
@@ -31,6 +31,9 @@ window.GHOUL_PLANS = {
   // Discount codes: "CODE": percent off. Typed in the form, not case-sensitive.
   codes: { "GHOUL15": 15 }
 };
+
+// Price of a plan for a length in months (one-time plans ignore the length).
+window.ghoulPrice = function (p, months) { return p.oneTime ? p.price : p.prices[months]; };
 
 window.ghoulMoney = function (n) { return n.toLocaleString("en-US") + " EGP"; };
 window.ghoulMoneyAr = function (n) { return n.toLocaleString("en-US") + " جنيه"; };

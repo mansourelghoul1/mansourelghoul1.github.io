@@ -229,7 +229,7 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
 <section id="plans"><div class="wrap">
   <span class="kicker">Plans</span>
   <h2 class="h-display"><span class="ar">اختار باقتك</span><span class="en">Choose your plan</span></h2>
-  <p class="intro"><span class="ar">الأسعار بالجنيه المصري. اختار المدة:</span><span class="en">Prices are in Egyptian pounds. Pick a length:</span></p>
+  <p class="intro"><span class="ar">الأسعار بالجنيه المصري. اختار مدة الاشتراك (BASIC دفعة واحدة):</span><span class="en">Prices are in Egyptian pounds. Pick a subscription length (BASIC is a one-time payment):</span></p>
   <div class="dur" role="group" aria-label="Plan length" id="dur"></div>
   <div class="plans" id="plansGrid"></div>
   <div class="extras">
@@ -320,7 +320,7 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
     <details><summary><span class="ar">خطتي هتجهز إمتى؟</span><span class="en">When is my plan ready?</span></summary><p><span class="ar">الكوتش بيكلمك خلال ٦ ساعات من الفورم يأكد معاك، وبعد الدفع خطتك بتجهز خلال ٤٨ ساعة.</span><span class="en">The coach contacts you within 6 hours of the form to confirm. After you pay, your plan is ready within 48 hours.</span></p></details>
     <details><summary><span class="ar">بدفع إزاي؟</span><span class="en">How do I pay?</span></summary><p><span class="ar">إنستاباي أو فودافون كاش أو تحويل بنكي. وبعد الدفع ابعت صورة التحويل على الواتساب.</span><span class="en">InstaPay, Vodafone Cash or bank transfer. After paying, send a screenshot of the payment on WhatsApp.</span></p></details>
     <details><summary><span class="ar">ينفع أسترجع فلوسي؟</span><span class="en">Can I get a refund?</span></summary><p><span class="ar">بمجرد ما خطتك توصلك، مفيش استرجاع.</span><span class="en">Once you receive your plan, there are no refunds.</span></p></details>
-    <details><summary><span class="ar">المتابعة كل قد إيه؟</span><span class="en">How often are check-ins?</span></summary><p><span class="ar">كل أسبوع.</span><span class="en">Every week.</span></p></details>
+    <details><summary><span class="ar">المتابعة كل قد إيه؟</span><span class="en">How often are check-ins?</span></summary><p><span class="ar">كل أسبوع، في كل الباقات ما عدا BASIC. BASIC برنامج تمرين بتاخده مرة واحدة من غير متابعة.</span><span class="en">Every week, on every plan except BASIC. BASIC is a one-time training program without check-ins.</span></p></details>
     <details><summary><span class="ar">أنا برة مصر، ينفع أشترك؟</span><span class="en">I'm outside Egypt. Can I join?</span></summary><p><span class="ar">آه. الأسعار بالجنيه المصري، كلمنا على الواتساب ونقولك تدفع إزاي.</span><span class="en">Yes. Prices are in Egyptian pounds. Message us on WhatsApp and we'll tell you how to pay.</span></p></details>
     <details><summary><span class="ar">بتدرب في الجيم كمان؟</span><span class="en">Do you also train people in the gym?</span></summary><p><span class="ar">آه، فيه تدريب شخصي ١:١ في الجيم. كلمنا على الواتساب نتفق على التفاصيل.</span><span class="en">Yes, 1-on-1 personal training in the gym. Message us on WhatsApp to arrange the details.</span></p></details>
     <details><summary><span class="ar">محتاج إيه قبل ما أبدأ؟</span><span class="en">What do I need before I start?</span></summary><p><span class="ar">قياس InBody وتاريخ الإصابات بتاعك.</span><span class="en">An InBody scan and your injury history.</span></p></details>
@@ -360,14 +360,16 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
     var lang=window.ghoulLang();
     durEl.innerHTML=P.durations.map(function(m){return '<button type="button" aria-pressed="'+(m===dur)+'" data-m="'+m+'">'+window.ghoulDur(m,lang)+'</button>';}).join("");
     grid.innerHTML=P.plans.map(function(p){
-      var price=p.prices[dur], per=dur>1?Math.round(price/dur):0, hot=p.id===P.popular;
-      return '<article class="plan'+(hot?' hot':'')+'">'+
+      var price=window.ghoulPrice(p,dur), hot=p.id===P.popular, per=(!p.oneTime&&dur>1)?Math.round(price/dur):0;
+      var perText=p.oneTime?(lang==="ar"?"دفعة واحدة · مش اشتراك":"One-time payment · not a subscription")
+        :(window.ghoulDur(dur,lang)+(per?(lang==="ar"?' · حوالي '+per.toLocaleString("en-US")+' جنيه في الشهر':' · about '+per.toLocaleString("en-US")+' EGP a month'):''));
+      return '<article class="plan'+(hot?' hot':'')+(p.oneTime?' once':'')+'">'+
         '<span class="tag">'+(lang==="ar"?"الأكثر طلباً":"Most chosen")+'</span>'+
         '<h3>'+p.name+'</h3>'+
         '<div class="price">'+price.toLocaleString("en-US")+' <small>EGP</small></div>'+
-        '<div class="per">'+(lang==="ar"?window.ghoulDur(dur,"ar"):window.ghoulDur(dur,"en"))+(per?(lang==="ar"?' · حوالي '+per.toLocaleString("en-US")+' جنيه في الشهر':' · about '+per.toLocaleString("en-US")+' EGP a month'):'')+'</div>'+
+        '<div class="per">'+perText+'</div>'+
         '<ul>'+p.features[lang].map(function(f){return "<li>"+f+"</li>";}).join("")+'</ul>'+
-        '<a class="btn'+(hot?'':' ghost')+'" href="start.html?plan='+p.id+'&months='+dur+'">'+(lang==="ar"?"اختار الباقة دي":"Choose this plan")+'</a>'+
+        '<a class="btn'+(hot?'':' ghost')+'" href="start.html?plan='+p.id+(p.oneTime?'':'&months='+dur)+'">'+(p.oneTime?(lang==="ar"?"اشتري البرنامج":"Get the program"):(lang==="ar"?"اختار الباقة دي":"Choose this plan"))+'</a>'+
       '</article>';
     }).join("");
   }

@@ -121,7 +121,8 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(D));}catch(e){}}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 
 function plan(){return P.plans.filter(function(p){return p.id===D.plan;})[0];}
-function price(){var p=plan();return p?p.prices[D.months]:0;}
+function price(){var p=plan();return p?window.ghoulPrice(p,D.months):0;}
+function lengthText(){var p=plan();return p&&p.oneTime?T("دفعة واحدة","One-time"):window.ghoulDur(D.months,window.ghoulLang());}
 function finalPrice(){return Math.round(price()*(100-(D.codePct||0))/100);}
 function label(list,v){var o=OPT[list].filter(function(x){return x[0]===v;})[0];return o?T(o[1],o[0]):v;}
 
@@ -139,8 +140,8 @@ function stepHtml(){
   if(step===0){
     h+='<h1 class="h-display">'+T("اختار باقتك","Choose your plan")+'</h1><p class="sub">'+T("تقدر تغيرها بعدين مع الكوتش.","You can change it later with the coach.")+'</p>';
     h+=q("plan",T("الباقة","Plan"),'<div class="pkg" role="group" data-pkg>'+P.plans.map(function(p){
-      return '<button type="button" aria-pressed="'+(D.plan===p.id)+'" data-v="'+p.id+'"><span><b>'+p.name+(p.id===P.popular?'<span class="pop">'+T("الأكثر طلباً","Most chosen")+'</span>':'')+'</b><small>'+p.features[window.ghoulLang()].slice(0,3).join(" · ")+'</small></span><span class="pr">'+p.prices[D.months].toLocaleString("en-US")+' EGP</span></button>';}).join("")+'</div>');
-    h+=q("months",T("المدة","Length"),'<div class="chips" role="group" data-months>'+P.durations.map(function(m){return '<button type="button" aria-pressed="'+(D.months===m)+'" data-v="'+m+'">'+window.ghoulDur(m,window.ghoulLang())+'</button>';}).join("")+'</div>');
+      return '<button type="button" aria-pressed="'+(D.plan===p.id)+'" data-v="'+p.id+'"><span><b>'+p.name+(p.id===P.popular?'<span class="pop">'+T("الأكثر طلباً","Most chosen")+'</span>':'')+'</b><small>'+p.features[window.ghoulLang()].slice(0,3).join(" · ")+'</small></span><span class="pr">'+window.ghoulPrice(p,D.months).toLocaleString("en-US")+' EGP'+(p.oneTime?'<small>'+T("دفعة واحدة","one-time")+'</small>':'')+'</span></button>';}).join("")+'</div>');
+    if(!(plan()&&plan().oneTime)) h+=q("months",T("مدة الاشتراك","Subscription length"),'<div class="chips" role="group" data-months>'+P.durations.map(function(m){return '<button type="button" aria-pressed="'+(D.months===m)+'" data-v="'+m+'">'+window.ghoulDur(m,window.ghoulLang())+'</button>';}).join("")+'</div>');
     h+=q("code",T("كود خصم","Discount code"),'<div class="code">'+input("code","text",T("لو معاك","If you have one"),'autocapitalize="characters" autocomplete="off"')+'<button type="button" class="btn ghost sm" id="applyCode">'+T("طبّق","Apply")+'</button></div><div class="codemsg" id="codemsg"></div>',{req:false});
     if(plan()) h+='<div class="total"><span>'+T("الإجمالي","Total")+'</span><span>'+(D.codePct?'<s>'+price().toLocaleString("en-US")+'</s>':'')+'<b>'+finalPrice().toLocaleString("en-US")+' EGP</b></span></div>';
   }
@@ -175,7 +176,7 @@ function summary(){
   var p=plan(), L=[];
   L.push(T("*فورم جديد · الغول*","*New ELGHOUL sign-up*"));
   L.push("");
-  L.push(T("الباقة: ","Plan: ")+(p?p.name:"")+" · "+window.ghoulDur(D.months,window.ghoulLang())+" · "+finalPrice().toLocaleString("en-US")+" EGP"+(D.codePct?" ("+D.code.toUpperCase()+" −"+D.codePct+"%)":""));
+  L.push(T("الباقة: ","Plan: ")+(p?p.name:"")+" · "+lengthText()+" · "+finalPrice().toLocaleString("en-US")+" EGP"+(D.codePct?" ("+D.code.toUpperCase()+" −"+D.codePct+"%)":""));
   L.push(T("الاسم: ","Name: ")+D.name);
   L.push(T("السن/الطول/الوزن: ","Age/height/weight: ")+D.age+" / "+D.height+"cm / "+D.weight+"kg");
   L.push(T("واتساب: ","WhatsApp: ")+D.whatsapp+(D.email?" · "+D.email:""));
@@ -192,7 +193,7 @@ function payload(){
   var p=plan();
   return {
     submission_date:new Date().toISOString(), form_lang:window.ghoulLang(),
-    plan:p?p.name:"", months:D.months, list_price_egp:price(), discount_code:D.codePct?D.code.toUpperCase():"", discount_pct:D.codePct||0, price_egp:finalPrice(),
+    plan:p?p.name:"", months:(p&&p.oneTime)?"one-time":D.months, list_price_egp:price(), discount_code:D.codePct?D.code.toUpperCase():"", discount_pct:D.codePct||0, price_egp:finalPrice(),
     client_name:D.name, age:D.age, height_cm:D.height, weight_kg:D.weight, whatsapp_number:D.whatsapp, email:D.email,
     fitness_goal:D.goal, fitness_level:D.level, training_days_per_week:D.days,
     injuries:D.injury==="Yes"?("Yes - "+D.injury_details):D.injury, gym_type:D.gym,
