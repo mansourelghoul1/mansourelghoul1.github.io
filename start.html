@@ -15,7 +15,7 @@
 body{padding-bottom:120px}
 .form-wrap{max-width:680px;margin:0 auto;padding:26px 20px}
 .progress{display:flex;gap:6px;margin:6px 0 26px}
-.progress span{flex:1;font-size:12.5px;color:var(--bone-3);border-top:4px solid var(--plum-2);padding-top:8px;line-height:1.3}
+.progress span{flex:1;font-size:12px;color:var(--bone-3);border-top:4px solid var(--plum-2);padding-top:8px;line-height:1.3}
 .progress span.done{border-color:var(--bone-3);color:var(--bone-2)}
 .progress span.now{border-color:var(--ember);color:var(--bone)}
 h1.h-display{font-size:clamp(40px,8vw,58px)}
@@ -36,7 +36,7 @@ textarea{min-height:96px;resize:vertical}
 .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .row label{display:block;font-size:14px;color:var(--bone-2);margin-bottom:6px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.chips button{font-size:15.5px;background:var(--night);border:1.5px solid var(--plum-2);border-radius:12px;padding:11px 17px;cursor:pointer;min-height:46px}
+.chips button{font-size:15px;background:var(--night);border:1.5px solid var(--plum-2);border-radius:12px;padding:11px 17px;cursor:pointer;min-height:46px}
 .chips button[aria-pressed=true]{background:var(--ember);border-color:var(--ember);color:var(--ember-ink);font-weight:500}
 .reveal{margin-top:12px}
 .pkg{display:grid;gap:10px;margin-top:6px}
@@ -84,12 +84,26 @@ textarea{min-height:96px;resize:vertical}
 <script src="js/site.js"></script>
 <script src="js/plans.js"></script>
 <script>
-/* ================= SETTINGS =================
-   Where the answers go. Paste his Google Apps Script web-app URL here
-   (see setup/GOOGLE-SHEET.md). Leave it empty and the form sends the
-   answers to his WhatsApp instead, so it works from day one.        */
-var FORM_ENDPOINT = "";
-/* ============================================ */
+/* ================= WHERE THE ANSWERS GO =================
+   Every sign-up is sent to Mansour's own Google Form
+   ("Mansour Elghoul Online Coaching – Application Form"), so it lands as a
+   row in his Google Sheet. The numbers are the form's question IDs: if a
+   question is deleted or re-created in the Google Form, its ID changes and
+   must be updated here. The form must stay "Accepting responses".       */
+var GOOGLE_FORM = {
+  action: "https://docs.google.com/forms/d/e/1FAIpQLSc-TvEw-ZmSDplHSsng8Vx1DHRXybxnqPLQvbRbEH8T6UmI3A/formResponse",
+  pages: 7,   // number of sections in the Google Form
+  ids: {
+    name: 1937498796, age: 1884266169, gender: 2129159220, email: 310507369,
+    whatsapp: 659739748, country: 175815775, height: 1072351582, weight: 1170873949,
+    goal: 520153199, days: 1642623485, experience: 1715355018, injuries: 1078746505,
+    activity: 1547797701, allergies: 1272024743, gym: 133234411, focus: 284203460,
+    why: 1230582616, commit: 1530815451, serious: 1632436128, plan: 1080523131,
+    length: 1520250076, price: 2074292711, code: 1396887890, foods: 982225818,
+    supps: 691242632, times: 2021401072, heard: 466020276
+  }
+};
+/* ======================================================== */
 
 (function(){
 "use strict";
@@ -99,20 +113,33 @@ var STEPS=[
   {ar:"الباقة",en:"Plan"},
   {ar:"بياناتك",en:"About you"},
   {ar:"التمرين",en:"Training"},
-  {ar:"الأكل ويومك",en:"Food & day"}
+  {ar:"الأكل ويومك",en:"Food & day"},
+  {ar:"الالتزام",en:"Commitment"}
 ];
+/* Option values (first item) must match the Google Form's choices exactly. */
 var OPT={
-  goal:[["Fat loss","حرق دهون"],["Muscle gain","بناء عضل"],["Fat loss + muscle","حرق + بناء"],["Strength","زيادة القوة"],["Fitness","تحسين اللياقة"]],
-  level:[["Beginner","مبتدئ"],["Intermediate","متوسط"],["Advanced","متقدم"]],
+  gender:[["Male","ذكر"],["Female","أنثى"]],
+  goal:[["Build muscle & size","بناء عضل وحجم"],["Lose fat / cut","حرق دهون / تنشيف"],["Build strength (bench/squat/deadlift)","زيادة القوة (بنش / سكوات / ديدليفت)"],["Improve glutes","تحسين الجلوتس"],["General fitness","لياقة عامة"]],
+  days:[["2","2"],["3","3"],["4","4"],["5","5"],["6","6"]],
+  experience:[["Beginner (0–1 year)","مبتدئ (أقل من سنة)"],["Intermediate (1–3 years)","متوسط (من سنة لـ ٣ سنين)"],["Advanced (3+ years)","متقدم (أكتر من ٣ سنين)"]],
   injury:[["None","مفيش"],["Yes","عندي"]],
-  gym:[["Full gym","جيم كامل"],["Small gym","جيم صغير"],["Home","في البيت"]],
+  gym:[["Commercial gym","جيم"],["Home gym","جيم في البيت"],["Both","الاتنين"]],
+  focus:[["Strength","القوة"],["Glutes","الجلوتس"],["Fat loss","حرق الدهون"],["Muscle building","بناء العضل"],["Form improvement","تحسين التكنيك"],["All of the above","كل اللي فوق"]],
+  activity:[["Low (office job, low steps)","قليل (شغل مكتب، مشي قليل)"],["Moderate (some steps, normal work)","متوسط (مشي معقول، شغل عادي)"],["High (active job, high steps)","عالي (شغل فيه حركة، مشي كتير)"]],
   foods:[["Dairy","الألبان"],["Eggs","البيض"],["Fish","السمك"],["Red meat","اللحمة"],["Chicken","الفراخ"],["Rice","الرز"],["Pasta","المكرونة"],["Vegetables","الخضار"]],
-  supps:[["No","لأ"],["Yes","آه"]]
+  supps:[["No","لأ"],["Yes","آه"]],
+  commit:[["Yes","آه، جاهز"],["No","لأ"]],
+  serious:[["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"],["10","10"]],
+  heard:[["Instagram","انستجرام"],["Friend","صاحب / حد قالي"],["Tiktok","تيك توك"],["Other","حاجة تانية"]]
 };
 
 /* ---- state, saved on this device so a reload keeps the answers ---- */
-var KEY="ghoul-form-v1", D, step=0, view="form", sentOk=false;
-var blank={plan:"",months:P.defaultDuration,code:"",codePct:0,name:"",age:"",height:"",weight:"",whatsapp:"",email:"",goal:"",level:"",days:4,injury:"",injury_details:"",gym:"",foods:[],foods_other:"",supps:"",supps_list:"",wake:"",sleep:"",train_time:""};
+var KEY="ghoul-form-v2", D, step=0, view="form", sentOk=false;
+var blank={plan:"",months:P.defaultDuration,code:"",codePct:0,
+  name:"",age:"",gender:"",height:"",weight:"",whatsapp:"",email:"",country:"",
+  goal:"",days:"",experience:"",injury:"",injury_details:"",gym:"",focus:"",
+  activity:"",allergies:"",foods:[],foods_other:"",supps:"",supps_list:"",wake:"",sleep:"",train_time:"",
+  why:"",commit:"",serious:"",heard:""};
 try{D=Object.assign({},blank,JSON.parse(localStorage.getItem(KEY)||"{}"));}catch(e){D=Object.assign({},blank);}
 var qs=new URLSearchParams(location.search);
 if(qs.get("plan")&&P.plans.some(function(p){return p.id===qs.get("plan");}))D.plan=qs.get("plan");
@@ -122,7 +149,7 @@ function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return
 
 function plan(){return P.plans.filter(function(p){return p.id===D.plan;})[0];}
 function price(){var p=plan();return p?window.ghoulPrice(p,D.months):0;}
-function lengthText(){var p=plan();return p&&p.oneTime?T("دفعة واحدة","One-time"):window.ghoulDur(D.months,window.ghoulLang());}
+function lengthText(lang){var p=plan(),l=lang||window.ghoulLang();return p&&p.oneTime?(l==="ar"?"دفعة واحدة":"One-time"):window.ghoulDur(D.months,l);}
 function finalPrice(){return Math.round(price()*(100-(D.codePct||0))/100);}
 function label(list,v){var o=OPT[list].filter(function(x){return x[0]===v;})[0];return o?T(o[1],o[0]):v;}
 
@@ -134,6 +161,7 @@ function chips(id,list,multi){
     var on=multi?D[id].indexOf(o[0])>-1:D[id]===o[0];
     return '<button type="button" aria-pressed="'+on+'" data-v="'+esc(o[0])+'">'+T(o[1],o[0])+'</button>';}).join("")+'</div>';}
 function input(id,type,ph,extra){return '<input type="'+type+'" id="f_'+id+'" data-f="'+id+'" value="'+esc(D[id])+'" placeholder="'+esc(ph||"")+'" '+(extra||"")+'>';}
+function area(id,ph){return '<textarea data-f="'+id+'" id="f_'+id+'" placeholder="'+esc(ph||"")+'">'+esc(D[id])+'</textarea>';}
 
 function stepHtml(){
   var h='<div class="progress">'+STEPS.map(function(s,i){return '<span class="'+(i<step?'done':i===step?'now':'')+'">'+T(s.ar,s.en)+'</span>';}).join("")+'</div>';
@@ -148,80 +176,109 @@ function stepHtml(){
   if(step===1){
     h+='<h1 class="h-display">'+T("بياناتك","About you")+'</h1><p class="sub">'+T("علشان الخطة تبقى على مقاس جسمك.","So your plan fits your body.")+'</p>';
     h+=q("name",T("اسمك بالكامل","Full name"),input("name","text",T("مثال: محمد أحمد علي","e.g. Mohamed Ahmed Ali"),'autocomplete="name"'));
+    h+=q("gender",T("النوع","Gender"),chips("gender","gender"));
     h+=q("body",T("السن والطول والوزن","Age, height and weight"),'<div class="row"><div><label for="f_age">'+T("السن","Age")+'</label>'+input("age","number","27",'inputmode="numeric" min="12" max="90"')+'</div><div><label for="f_height">'+T("الطول (سم)","Height (cm)")+'</label>'+input("height","number","175",'inputmode="numeric" min="120" max="230"')+'</div><div><label for="f_weight">'+T("الوزن (كجم)","Weight (kg)")+'</label>'+input("weight","number","80",'inputmode="decimal" min="30" max="300" step="0.1"')+'</div></div>');
     h+=q("whatsapp",T("رقم الواتساب","WhatsApp number"),input("whatsapp","tel","+20 10 0000 0000",'inputmode="tel" dir="ltr" autocomplete="tel"'),{err:T("اكتب رقم صحيح","Enter a valid number")});
-    h+=q("email",T("الإيميل","Email"),input("email","email","name@gmail.com",'inputmode="email" dir="ltr" autocapitalize="off" autocomplete="email"'),{req:false,err:T("الإيميل مش مظبوط","That email doesn't look right")});
+    h+=q("email",T("الإيميل","Email"),input("email","email","name@gmail.com",'inputmode="email" dir="ltr" autocapitalize="off" autocomplete="email"'),{err:T("اكتب إيميل صحيح","Enter a valid email")});
+    h+=q("country",T("البلد / المدينة","Country / city"),input("country","text",T("مثال: مصر، القاهرة","e.g. Egypt, Cairo"),'autocomplete="address-level2"'));
   }
   if(step===2){
-    h+='<h1 class="h-display">'+T("التمرين","Training")+'</h1><p class="sub">'+T("علشان البرنامج يناسب مستواك وجيمك.","So the program fits your level and your gym.")+'</p>';
-    h+=q("goal",T("هدفك إيه؟","What's your goal?"),chips("goal","goal"));
-    h+=q("level",T("مستواك دلوقتي","Your current level"),chips("level","level"));
-    h+=q("days",T("هتتمرن كام يوم في الأسبوع؟","How many days a week can you train?"),'<div class="stepper"><button type="button" data-step="-1" aria-label="−">−</button><output id="daysOut">'+D.days+'</output><button type="button" data-step="1" aria-label="+">+</button></div>');
-    h+=q("injury",T("عندك إصابة أو مرض مزمن؟","Any injury or long-term condition?"),chips("injury","injury")+(D.injury==="Yes"?'<div class="reveal">'+'<textarea data-f="injury_details" id="f_injury_details" placeholder="'+T("اكتب الإصابة أو المرض وإمتى حصل","Describe it and when it happened")+'">'+esc(D.injury_details)+'</textarea></div>':''),{err:T("اختار، ولو عندك اكتب التفاصيل","Choose one, and add details if yes")});
-    h+=q("gym",T("هتتمرن فين؟","Where will you train?"),chips("gym","gym"));
+    h+='<h1 class="h-display">'+T("التمرين","Training")+'</h1><p class="sub">'+T("علشان البرنامج يناسب مستواك وهدفك.","So the program fits your level and your goal.")+'</p>';
+    h+=q("goal",T("هدفك إيه؟","What's your fitness goal?"),chips("goal","goal"));
+    h+=q("focus",T("عايز تركز على حاجة معينة؟","Do you want a specific focus?"),chips("focus","focus"));
+    h+=q("experience",T("خبرتك في التمرين","Training experience"),chips("experience","experience"));
+    h+=q("days",T("تقدر تتمرن كام يوم في الأسبوع؟","How many days a week can you train?"),chips("days","days"));
+    h+=q("gym",T("بتتمرن فين؟","Where do you train?"),chips("gym","gym"));
+    h+=q("injury",T("عندك إصابة أو أي حاجة تمنعك؟","Any injuries or limitations?"),chips("injury","injury")+(D.injury==="Yes"?'<div class="reveal">'+area("injury_details",T("اكتب الإصابة أو المرض وإمتى حصل","Describe it and when it happened"))+'</div>':''),{err:T("اختار، ولو عندك اكتب التفاصيل","Choose one, and add details if yes")});
   }
   if(step===3){
     h+='<h1 class="h-display">'+T("الأكل ويومك","Food & your day")+'</h1><p class="sub">'+T("علشان نظام الأكل يمشي مع حياتك.","So the nutrition plan fits your life.")+'</p>';
+    h+=q("activity",T("حركتك في اليوم عاملة إزاي؟","What's your daily activity level?"),chips("activity","activity"));
+    h+=q("allergies",T("عندك حساسية من أكل أو أكل ممنوع عليك؟","Any food allergies or restrictions?"),input("allergies","text",T("لو مفيش سيبها فاضية","Leave empty if none")),{req:false});
     h+=q("foods",T("أكلات مش بتحبها","Foods you don't eat"),chips("foods","foods",true)+'<div class="reveal">'+input("foods_other","text",T("حاجة تانية؟","Anything else?"))+'</div>',{req:false,hint:T("اختار كل اللي ينطبق","Tap all that apply")});
     h+=q("supps",T("بتاخد مكملات؟","Do you take supplements?"),chips("supps","supps")+(D.supps==="Yes"?'<div class="reveal">'+input("supps_list","text",T("إيه هي؟ مثال: واي بروتين، كرياتين","Which ones? e.g. whey, creatine"))+'</div>':''),{err:T("اختار، ولو آه اكتب إيه هي","Choose one, and list them if yes")});
     h+=q("times",T("مواعيد يومك","Your daily times"),'<div class="row"><div><label for="f_wake">'+T("بتصحى","Wake up")+'</label>'+input("wake","time","")+'</div><div><label for="f_sleep">'+T("بتنام","Sleep")+'</label>'+input("sleep","time","")+'</div><div><label for="f_train_time">'+T("بتتمرن","Train")+'</label>'+input("train_time","time","")+'</div></div>');
-    h+='<div class="notice">'+T("بعد الفورم ابعت على الواتساب: قياس InBody وتاريخ الإصابات.","After the form, send on WhatsApp: your InBody scan and injury history.")+'</div>';
+  }
+  if(step===4){
+    h+='<h1 class="h-display">'+T("الالتزام","Commitment")+'</h1><p class="sub">'+T("آخر خطوة. خليك صريح.","Last step. Be honest.")+'</p>';
+    h+=q("why",T("ليه عايز تبدأ دلوقتي؟","What's your WHY? Why do you want to start coaching?"),area("why",T("اكتب السبب الحقيقي","Write the real reason")),{req:false});
+    h+=q("commit",T("جاهز تلتزم ١٢ أسبوع؟","Are you ready to commit 12 weeks to this program?"),chips("commit","commit"));
+    h+=q("serious",T("قد إيه جاد إنك توصل لهدفك؟ (من ١ لـ ١٠)","How serious are you about your goals? (1–10)"),chips("serious","serious"));
+    h+=q("heard",T("عرفتني منين؟","How did you hear about my coaching?"),chips("heard","heard"));
+    h+='<div class="notice">'+T("بعد الفورم ابعت على الواتساب: صور جسمك، وقياس InBody، وتاريخ الإصابات.","After the form, send on WhatsApp: your physique photos, your InBody scan and your injury history.")+'</div>';
   }
   return h;
 }
 
-/* ---- the WhatsApp text and the Sheet row ---- */
-function times(){return [D.wake&&T("صحيان ","Wake ")+D.wake,D.sleep&&T("نوم ","Sleep ")+D.sleep,D.train_time&&T("تمرين ","Train ")+D.train_time].filter(Boolean).join(" · ");}
+/* ---- values sent to the Google Form (always in English) ---- */
+function injuriesText(){return D.injury==="Yes"?D.injury_details.trim():(D.injury==="None"?"None":"");}
+function foodsText(){return D.foods.concat(D.foods_other.trim()?[D.foods_other.trim()]:[]).join(", ");}
+function suppsText(){return D.supps==="Yes"?D.supps_list.trim():(D.supps==="No"?"None":"");}
+function timesText(){return "Wake "+D.wake+" / Sleep "+D.sleep+" / Training "+D.train_time;}
+function formFields(){
+  var p=plan(), f={
+    name:D.name.trim(), age:D.age, gender:D.gender, email:D.email.trim(), whatsapp:D.whatsapp.trim(),
+    country:D.country.trim(), height:D.height, weight:D.weight, goal:D.goal, days:D.days,
+    experience:D.experience, injuries:injuriesText(), activity:D.activity, allergies:D.allergies.trim(),
+    gym:D.gym, focus:D.focus, why:D.why.trim(), commit:D.commit, serious:D.serious,
+    plan:p?p.name:"", length:lengthText("en"),
+    price:finalPrice()+" EGP"+(D.codePct?" (list "+price()+", -"+D.codePct+"%)":""),
+    code:D.codePct?D.code.trim().toUpperCase():"", foods:foodsText(), supps:suppsText(), times:timesText(),
+    heard:D.heard
+  };
+  var body=new URLSearchParams();
+  Object.keys(f).forEach(function(k){if(f[k]!==""&&f[k]!=null)body.append("entry."+GOOGLE_FORM.ids[k],String(f[k]));});
+  body.append("pageHistory",Array.from({length:GOOGLE_FORM.pages},function(_,i){return i;}).join(","));
+  return body;
+}
+
+/* ---- the WhatsApp text (backup, and for the coach) ---- */
 function summary(){
   var p=plan(), L=[];
-  L.push(T("*فورم جديد · الغول*","*New ELGHOUL sign-up*"));
-  L.push("");
+  L.push(T("*فورم جديد · الغول*","*New ELGHOUL sign-up*"),"");
   L.push(T("الباقة: ","Plan: ")+(p?p.name:"")+" · "+lengthText()+" · "+finalPrice().toLocaleString("en-US")+" EGP"+(D.codePct?" ("+D.code.toUpperCase()+" −"+D.codePct+"%)":""));
-  L.push(T("الاسم: ","Name: ")+D.name);
+  L.push(T("الاسم: ","Name: ")+D.name+" · "+label("gender",D.gender));
   L.push(T("السن/الطول/الوزن: ","Age/height/weight: ")+D.age+" / "+D.height+"cm / "+D.weight+"kg");
-  L.push(T("واتساب: ","WhatsApp: ")+D.whatsapp+(D.email?" · "+D.email:""));
-  L.push(T("الهدف: ","Goal: ")+label("goal",D.goal)+" · "+T("المستوى: ","Level: ")+label("level",D.level));
-  L.push(T("أيام التمرين: ","Training days: ")+D.days+" · "+T("المكان: ","Where: ")+label("gym",D.gym));
+  L.push(T("واتساب: ","WhatsApp: ")+D.whatsapp+" · "+D.email);
+  L.push(T("البلد: ","Country: ")+D.country);
+  L.push(T("الهدف: ","Goal: ")+label("goal",D.goal)+" · "+T("التركيز: ","Focus: ")+label("focus",D.focus));
+  L.push(T("الخبرة: ","Experience: ")+label("experience",D.experience)+" · "+T("أيام: ","Days: ")+D.days+" · "+label("gym",D.gym));
   L.push(T("إصابات: ","Injuries: ")+(D.injury==="Yes"?D.injury_details:label("injury",D.injury)));
+  L.push(T("الحركة: ","Activity: ")+label("activity",D.activity));
+  if(D.allergies.trim())L.push(T("حساسية: ","Allergies: ")+D.allergies);
   var foods=D.foods.map(function(f){return label("foods",f);}).concat(D.foods_other?[D.foods_other]:[]);
   L.push(T("مش بياكل: ","Doesn't eat: ")+(foods.join(T("، ",", "))||"—"));
   L.push(T("مكملات: ","Supplements: ")+(D.supps==="Yes"?D.supps_list:label("supps",D.supps)));
-  L.push(T("المواعيد: ","Times: ")+times());
+  L.push(T("المواعيد: ","Times: ")+timesText());
+  if(D.why.trim())L.push(T("السبب: ","Why: ")+D.why);
+  L.push(T("ملتزم ١٢ أسبوع: ","Commit 12 weeks: ")+label("commit",D.commit)+" · "+T("الجدية: ","Seriousness: ")+D.serious+"/10");
+  L.push(T("عرفني من: ","Heard from: ")+label("heard",D.heard));
   return L.join("\n");
-}
-function payload(){
-  var p=plan();
-  return {
-    submission_date:new Date().toISOString(), form_lang:window.ghoulLang(),
-    plan:p?p.name:"", months:(p&&p.oneTime)?"one-time":D.months, list_price_egp:price(), discount_code:D.codePct?D.code.toUpperCase():"", discount_pct:D.codePct||0, price_egp:finalPrice(),
-    client_name:D.name, age:D.age, height_cm:D.height, weight_kg:D.weight, whatsapp_number:D.whatsapp, email:D.email,
-    fitness_goal:D.goal, fitness_level:D.level, training_days_per_week:D.days,
-    injuries:D.injury==="Yes"?("Yes - "+D.injury_details):D.injury, gym_type:D.gym,
-    disliked_foods:D.foods.concat(D.foods_other?[D.foods_other]:[]).join(", "),
-    supplements:D.supps==="Yes"?("Yes - "+D.supps_list):D.supps,
-    wake_up_time:D.wake, sleep_time:D.sleep, training_time:D.train_time
-  };
 }
 function waLink(text){return "https://wa.me/"+G.whatsapp+"?text="+encodeURIComponent(text);}
 
-/* ---- checks ---- */
+/* ---- checks (everything the Google Form requires is required here too) ---- */
 function errors(){
   var e=[];
   if(step===0){if(!D.plan)e.push("plan");}
   if(step===1){
     if(!D.name.trim())e.push("name");
+    if(!D.gender)e.push("gender");
     if(!(+D.age>0&&+D.height>0&&+D.weight>0))e.push("body");
     if(D.whatsapp.replace(/\D/g,"").length<8)e.push("whatsapp");
-    if(D.email.trim()&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D.email.trim()))e.push("email");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D.email.trim()))e.push("email");
+    if(!D.country.trim())e.push("country");
   }
   if(step===2){
-    ["goal","level","gym"].forEach(function(k){if(!D[k])e.push(k);});
+    ["goal","focus","experience","days","gym"].forEach(function(k){if(!D[k])e.push(k);});
     if(!D.injury||(D.injury==="Yes"&&!D.injury_details.trim()))e.push("injury");
   }
   if(step===3){
+    if(!D.activity)e.push("activity");
     if(!D.supps||(D.supps==="Yes"&&!D.supps_list.trim()))e.push("supps");
     if(!D.wake||!D.sleep||!D.train_time)e.push("times");
   }
+  if(step===4){["commit","serious","heard"].forEach(function(k){if(!D[k])e.push(k);});}
   return e;
 }
 var shown=false;
@@ -254,16 +311,16 @@ function doneHtml(){
   if(sentOk){
     h+='<p class="sub">'+T("الكوتش هيكلمك على الواتساب خلال ٦ ساعات يأكد معاك.","The coach will contact you on WhatsApp within 6 hours to confirm.")+'</p>';
   } else {
-    h+='<p class="sub">'+T("اضغط تحت علشان تبعت إجاباتك للكوتش على الواتساب، وبعدين اضغط إرسال.","Tap below to send your answers to the coach on WhatsApp, then press send.")+'</p>'+
+    h+='<div class="notice">'+T("الفورم ماتبعتش من الموقع (اتأكد من النت). إجاباتك محفوظة، ابعتها للكوتش على الواتساب من الزرار ده.","The form couldn't be sent from the site (check your internet). Your answers are kept: send them to the coach on WhatsApp with this button.")+'</div>'+
        '<a class="btn" style="width:100%" href="'+wa+'">'+T("ابعت إجاباتي على الواتساب","Send my answers on WhatsApp")+'</a>';
   }
   h+='<ol class="done-list">'+
      '<li><b>1</b><span>'+T("الكوتش يكلمك خلال ٦ ساعات ويأكد الباقة.","The coach contacts you within 6 hours and confirms your plan.")+'</span></li>'+
      '<li><b>2</b><span>'+T("ادفع ","Pay ")+'<b class="lat" style="font-size:inherit;color:var(--bone)">'+finalPrice().toLocaleString("en-US")+' EGP</b>'+T(" بإنستاباي أو فودافون كاش أو تحويل بنكي.<br>"," by InstaPay, Vodafone Cash or bank transfer.<br>")+'<span class="handle">'+esc(G.instapayHandle)+'</span></span></li>'+
-     '<li><b>3</b><span>'+T("ابعت على الواتساب: صورة التحويل، وقياس InBody، وتاريخ الإصابات.","Send on WhatsApp: the payment screenshot, your InBody scan and your injury history.")+'</span></li>'+
+     '<li><b>3</b><span>'+T("ابعت على الواتساب: صورة التحويل، وصور جسمك، وقياس InBody، وتاريخ الإصابات.","Send on WhatsApp: the payment screenshot, your physique photos, your InBody scan and your injury history.")+'</span></li>'+
      '<li><b>4</b><span>'+T("خطتك توصلك خلال ٤٨ ساعة.","Your plan arrives within 48 hours.")+'</span></li></ol>';
   h+='<div class="stack"><a class="btn ghost" href="'+esc(G.instapayLink)+'" rel="noopener">'+T("ادفع بإنستاباي","Pay with InstaPay")+'</a>'+
-     (sentOk?'<a class="btn ghost" href="'+waLink(T("أهلاً كوتش، لسه باعت الفورم.","Hi Coach, I just sent the form."))+'">'+T("كلم الكوتش على الواتساب","Message the coach on WhatsApp")+'</a>':'')+
+     (sentOk?'<a class="btn ghost" href="'+wa+'">'+T("ابعت إجاباتك للكوتش على الواتساب كمان","Also send your answers to the coach on WhatsApp")+'</a>':'')+
      '<a class="btn ghost" href="index.html">'+T("رجوع للموقع","Back to the website")+'</a></div>';
   return h;
 }
@@ -282,7 +339,6 @@ function wire(){
   if(pk)pk.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;D.plan=b.dataset.v;save();render(true);});
   var mo=app.querySelector("[data-months]");
   if(mo)mo.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;D.months=+b.dataset.v;save();render(true);});
-  app.querySelectorAll("[data-step]").forEach(function(b){b.addEventListener("click",function(){D.days=Math.min(7,Math.max(1,D.days+ +b.dataset.step));document.getElementById("daysOut").textContent=D.days;save();});});
   var ac=document.getElementById("applyCode");
   if(ac){
     var msg=document.getElementById("codemsg");
@@ -308,16 +364,12 @@ function wire(){
 }
 
 function submit(btn){
-  if(!FORM_ENDPOINT){view="done";sentOk=false;render();return;}
   btn.disabled=true;btn.textContent=T("بيتبعت…","Sending…");
-  fetch(FORM_ENDPOINT,{method:"POST",body:JSON.stringify(payload())}) // text/plain: no preflight, works with Apps Script
-    .then(function(r){if(!r.ok)throw new Error(r.status);return r.text();})
+  // Google Forms doesn't allow reading its reply from another site ("no-cors"),
+  // so a network error is the only failure we can see.
+  fetch(GOOGLE_FORM.action,{method:"POST",mode:"no-cors",body:formFields()})
     .then(function(){sentOk=true;view="done";try{localStorage.removeItem(KEY);}catch(e){}render();})
-    .catch(function(){
-      // Never lose a lead: fall back to WhatsApp with the answers.
-      sentOk=false;view="done";render();
-      app.insertAdjacentHTML("afterbegin",'<div class="notice">'+T("الفورم ماتبعتش من الموقع. إجاباتك محفوظة، ابعتها على الواتساب من الزرار تحت.","The form couldn't be sent from the site. Your answers are kept: send them on WhatsApp with the button below.")+'</div>');
-    });
+    .catch(function(){sentOk=false;view="done";render();});
 }
 
 document.addEventListener("ghoul:lang",function(){render(true);});
