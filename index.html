@@ -46,9 +46,20 @@
 .gets .note::before{display:none}
 
 /* results */
-.results{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-.results .ph{aspect-ratio:3/4}
-.results figcaption{margin-top:10px;font-size:15px;color:var(--bone-2)}
+.results{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:40px}
+.tr{background:var(--plum);border-radius:24px;padding:12px;margin:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.shot{position:relative;aspect-ratio:3/5;border-radius:16px;overflow:hidden;background:var(--night)}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.shot span{position:absolute;top:10px;inset-inline-start:10px;font:500 13px/1 var(--body);background:rgba(26,14,34,.78);color:var(--bone);padding:6px 11px;border-radius:999px;backdrop-filter:blur(4px)}
+.shot span.after{background:var(--ember);color:var(--ember-ink)}
+.tr figcaption{padding:16px 10px 8px;display:grid;gap:4px}
+.tr figcaption b{font-size:30px;line-height:1.15;color:var(--bone);font-weight:400}
+html[lang=ar] .tr figcaption b{font-family:var(--ar-display)}
+html[lang=en] .tr figcaption b{font-family:var(--en-display);font-weight:800;letter-spacing:-.01em}
+.tr figcaption span{color:var(--bone-2);font-size:15px}
+.tr figcaption em{font-style:normal;color:var(--ember);font-size:14.5px}
+.results-more{text-align:center;margin-top:22px}
 
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px;padding:0;list-style:none}
@@ -125,13 +136,14 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
 @media (max-width:900px){
   .two,.coach,.extras,.before{grid-template-columns:1fr}
   .pay{grid-template-columns:1fr}
-  .results{grid-template-columns:1fr 1fr}
+
   .steps{grid-template-columns:1fr 1fr}
   .cfacts{grid-template-columns:1fr 1fr}
   .coach .ph{order:-1;max-width:420px}
 }
 @media (max-width:560px){
   .plans,.results,.steps{grid-template-columns:1fr}
+  .tr figcaption b{font-size:26px}
   .dur{display:flex}
   .dur button{flex:1;padding:10px 8px}
 }
@@ -207,11 +219,8 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
   <span class="kicker">Client results</span>
   <h2 class="h-display"><span class="ar">نتايج حقيقية</span><span class="en">Real results</span></h2>
   <p class="intro"><span class="ar">كل صورة هنا بإذن صاحبها.</span><span class="en">Every photo here is shared with the client's permission.</span></p>
-  <div class="results">
-    <figure><div class="ph"><span class="ar">صورة قبل / بعد<br>هتتحط هنا</span><span class="en">Before / after photo<br>goes here</span></div><figcaption><span class="ar">اسم العميل · المدة · النتيجة</span><span class="en">Client name · time · result</span></figcaption></figure>
-    <figure><div class="ph"><span class="ar">صورة قبل / بعد<br>هتتحط هنا</span><span class="en">Before / after photo<br>goes here</span></div><figcaption><span class="ar">اسم العميل · المدة · النتيجة</span><span class="en">Client name · time · result</span></figcaption></figure>
-    <figure><div class="ph"><span class="ar">صورة قبل / بعد<br>هتتحط هنا</span><span class="en">Before / after photo<br>goes here</span></div><figcaption><span class="ar">اسم العميل · المدة · النتيجة</span><span class="en">Client name · time · result</span></figcaption></figure>
-  </div>
+  <div class="results" id="resultsGrid"></div>
+  <div class="results-more"><button type="button" class="btn ghost" id="resultsMore" hidden></button></div>
 </div></section>
 
 <section id="how" class="alt"><div class="wrap">
@@ -349,6 +358,7 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
 
 <script src="js/site.js"></script>
 <script src="js/plans.js"></script>
+<script src="js/results.js"></script>
 <script>
 (function(){
   var P=window.GHOUL_PLANS, dur=P.defaultDuration;
