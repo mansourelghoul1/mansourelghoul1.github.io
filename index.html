@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-ar="الغول · كوتش منصور الغول · ٩٠ يوم تبني فيهم نفسك" data-en="ELGHOUL · Coach Mansour Elghoul · 90 days to rebuild yourself">الغول · كوتش منصور الغول</title>
+<meta name="description" content="Online training and nutrition coaching, and 1-on-1 in-gym personal training, with Coach Mansour Elghoul. 9+ years coaching, 500+ clients. | تدريب ودايت أونلاين وتدريب شخصي في الجيم مع الكوتش منصور الغول.">
+<meta property="og:title" content="ELGHOUL · الغول — 90 days to rebuild yourself">
+<meta property="og:description" content="Online coaching and in-gym personal training with Coach Mansour Elghoul.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1A0E22">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Alexandria:wght@300;400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ghoul.css">
+<style>
+/* hero: the clawed wordmark */
+.hero{text-align:center;padding:34px 0 96px;overflow:hidden}
+.mark{position:relative;display:inline-block}
+.mark h1{font:400 clamp(140px,28vw,360px)/1 var(--ar-display);color:var(--bone);padding-top:.08em}
+.claws{position:absolute;inset:0;pointer-events:none}
+.claws i{position:absolute;top:8%;height:94%;width:clamp(9px,1.5vw,19px);background:var(--night);transform:skewX(-24deg);border-radius:40%;transform-origin:50% 0}
+.claws i:nth-child(1){left:37%} .claws i:nth-child(2){left:48%;top:2%} .claws i:nth-child(3){left:59%}
+.claws i::after{content:"";position:absolute;inset:0 -3px;border-inline:2px solid var(--ember);border-radius:40%}
+@media (prefers-reduced-motion:no-preference){
+  .claws i{animation:slash .5s cubic-bezier(.7,0,.2,1) backwards}
+  .claws i:nth-child(1){animation-delay:.35s}.claws i:nth-child(2){animation-delay:.47s}.claws i:nth-child(3){animation-delay:.59s}
+  @keyframes slash{from{transform:skewX(-24deg) scaleY(0)}}
+}
+.brand-en{font:800 clamp(16px,2.2vw,24px)/1 var(--en-display);letter-spacing:.42em;color:var(--ember);margin-top:-6px;padding-inline-start:.42em}
+.tagline{margin:30px auto 6px;font-size:clamp(28px,4.4vw,52px)}
+.tagline-sub{color:var(--bone);font-weight:400;font-size:clamp(17px,2vw,21px)}
+.hero .lead{max-width:620px;margin:16px auto 32px;color:var(--bone-2)}
+.hero .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.facts{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 26px;margin-top:38px;color:var(--bone-2);font-size:15px}
+.facts b{color:var(--bone);font-weight:500}
+
+/* who + what */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chips span{border:1px solid var(--plum-3);border-radius:999px;padding:8px 18px;font-size:16px}
+.gets{list-style:none;padding:0;margin-top:22px}
+.gets li{display:flex;gap:14px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--plum-2);font-size:18px}
+.gets li::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--ember);transform:translateY(-2px)}
+.gets .note{font-size:14px;color:var(--bone-2);border:0;padding-top:10px}
+.gets .note::before{display:none}
+
+/* results */
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.results .ph{aspect-ratio:3/4}
+.results figcaption{margin-top:10px;font-size:15px;color:var(--bone-2)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px;padding:0;list-style:none}
+.steps li{background:var(--night);border-radius:var(--r);padding:24px 22px}
+.steps .when{font-size:26px;color:var(--ember)}
+html[lang=en] .steps .when{font-size:22px}
+.steps h3{font:500 17px/1.45 var(--body);margin:10px 0 6px}
+.steps p{color:var(--bone-2);font-size:14.5px;line-height:1.7}
+
+/* plans */
+.dur{display:inline-flex;gap:4px;background:var(--plum);border:1px solid var(--plum-2);border-radius:14px;padding:4px;margin-top:26px;flex-wrap:wrap}
+.dur button{background:none;border:0;border-radius:10px;padding:10px 18px;font-size:15px;font-weight:500;cursor:pointer;color:var(--bone-2);min-height:44px}
+.dur button[aria-pressed=true]{background:var(--bone);color:var(--night)}
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px;align-items:stretch}
+.plan{border:1px solid var(--plum-2);border-radius:24px;padding:28px 24px;display:flex;flex-direction:column}
+.plan h3{font:800 22px/1.1 var(--en-display);letter-spacing:.06em}
+.plan .price{font:800 38px/1 var(--en-display);margin:20px 0 4px;direction:ltr;text-align:start}
+html[lang=ar] .plan .price{text-align:right}
+.plan .price small{font:400 15px var(--body)}
+.plan .per{font-size:14px;color:var(--bone-2);min-height:24px}
+.plan ul{padding-inline-start:20px;color:var(--bone-2);margin:18px 0 26px;font-size:15.5px;line-height:1.75;flex:1}
+.plan .btn{width:100%}
+.plan.hot{background:var(--ember);color:var(--ember-ink);border-color:var(--ember)}
+.plan.hot ul,.plan.hot .per{color:#5a1e06}
+.plan.hot .btn{background:var(--night);color:var(--bone)}
+.plan .tag{align-self:flex-start;background:var(--night);color:var(--bone);font-size:13px;padding:3px 12px;border-radius:999px;margin-bottom:12px}
+.plan:not(.hot) .tag{display:none}
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.extra{border:1px dashed var(--plum-3);border-radius:20px;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.extra b{font-weight:500;font-size:18px;display:block}
+.extra span{color:var(--bone-2);font-size:15px}
+
+/* payment */
+.pay{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.pay > div{background:var(--night);border-radius:var(--r);padding:26px}
+.pay h3{font:500 20px/1.3 var(--body);margin-bottom:8px}
+.pay p{color:var(--bone-2);font-size:15px;margin-bottom:16px}
+.handle{font:500 15px/1.4 var(--body);direction:ltr;unicode-bidi:isolate;background:var(--plum);border-radius:10px;padding:10px 12px;display:block;word-break:break-all;margin-bottom:12px}
+.pay-flow{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px 26px;color:var(--bone-2)}
+.pay-flow b{color:var(--ember);font-weight:500}
+
+/* coach */
+.coach{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+.coach .role{font:800 14px/1.4 var(--en-display);letter-spacing:.16em;color:var(--ember);margin:-2px 0 22px}
+.coach p{color:var(--bone-2);margin-bottom:14px}
+.motto{font-size:clamp(26px,3.6vw,40px);color:var(--bone);margin:26px 0 18px;line-height:1.3}
+.cfacts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--plum-2);border-radius:16px;overflow:hidden;margin-top:24px}
+.cfacts div{background:var(--plum);padding:16px 14px}
+.cfacts b{display:block;font:800 26px/1 var(--en-display);color:var(--bone)}
+.cfacts span{font-size:13px;color:var(--bone-2)}
+.coach .ph{aspect-ratio:3/4}
+
+/* before */
+.before{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+.before div{border:1px solid var(--plum-2);border-radius:var(--r);padding:24px 26px}
+.before b{font-weight:500;font-size:20px;display:block;margin-bottom:4px}
+.before p{color:var(--bone-2);font-size:15px}
+
+/* faq */
+.faq{margin-top:26px}
+details{border-bottom:1px solid var(--plum-2);padding:22px 0}
+summary{font:500 19px/1.45 var(--body);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--ember);font:800 26px/1 var(--en-display)}
+details[open] summary::after{content:"−"}
+details p{color:var(--bone-2);margin-top:10px;max-width:760px}
+
+/* final */
+.final{text-align:center}
+.final .h-display{font-size:clamp(42px,7vw,88px)}
+.final p{color:var(--bone-2);margin:10px auto 30px;max-width:520px}
+
+@media (max-width:1060px){.plans{grid-template-columns:1fr 1fr}.steps{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:900px){
+  .two,.coach,.extras,.before{grid-template-columns:1fr}
+  .pay{grid-template-columns:1fr}
+  .results{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .cfacts{grid-template-columns:1fr 1fr}
+  .coach .ph{order:-1;max-width:420px}
+}
+@media (max-width:560px){
+  .plans,.results,.steps{grid-template-columns:1fr}
+  .dur{display:flex}
+  .dur button{flex:1;padding:10px 8px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-head"><div class="wrap">
+  <a class="logo" href="#top"><span class="mark">الغول<b>.</b></span><span class="word">ELGHOUL</span></a>
+  <ul class="nav">
+    <li><a href="#plans"><span class="ar">الباقات</span><span class="en">Plans</span></a></li>
+    <li><a href="#how"><span class="ar">بنشتغل إزاي</span><span class="en">How it works</span></a></li>
+    <li><a href="#coach"><span class="ar">الكوتش</span><span class="en">Coach</span></a></li>
+    <li><a href="#faq"><span class="ar">أسئلة</span><span class="en">FAQ</span></a></li>
+  </ul>
+  <div class="head-actions">
+    <div class="langs" role="group" aria-label="Language / اللغة"><button type="button" data-lang-btn="ar">ع</button><button type="button" data-lang-btn="en">EN</button></div>
+    <a class="btn sm" href="start.html"><span class="ar">ابدأ</span><span class="en">Start</span></a>
+  </div>
+</div></header>
+
+<main id="top">
+<div class="wrap">
+<section class="hero" aria-labelledby="brand">
+  <div class="mark">
+    <h1 id="brand">الغول</h1>
+    <div class="claws" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+  <div class="brand-en">ELGHOUL</div>
+  <h2 class="tagline h-display"><span class="ar">٩٠ يوم تبني فيهم نفسك من جديد</span><span class="en">90 days to rebuild yourself</span></h2>
+  <p class="tagline-sub"><span class="ar">أقوى. أفيت. ملتزم أكتر. نسخة أحسن منك.</span><span class="en">Stronger. Fitter. More disciplined. A better version of you.</span></p>
+  <p class="lead"><span class="ar">تمرين ودايت أونلاين على مقاسك، أو تدريب شخصي ١:١ في الجيم، مع الكوتش منصور الغول.</span><span class="en">Online training and nutrition coaching built for you, or 1-on-1 personal training in the gym, with Coach Mansour Elghoul.</span></p>
+  <div class="ctas">
+    <a class="btn" href="start.html"><span class="ar">ابدأ الفورم</span><span class="en">Start the form</span> <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="btn ghost" href="#plans"><span class="ar">شوف الباقات</span><span class="en">See plans</span></a>
+  </div>
+  <div class="facts">
+    <span><b class="num">+9</b> <span class="ar">سنين تدريب</span><span class="en">years coaching</span></span>
+    <span><b class="num">+500</b> <span class="ar">عميل</span><span class="en">clients</span></span>
+    <span><span class="ar">مدرب شخصي معتمد <b class="lat">CPT</b> وكوتش باورليفتنج</span><span class="en"><b>CPT</b> personal trainer &amp; powerlifting coach</span></span>
+  </div>
+</section>
+</div>
+
+<section id="who" class="alt"><div class="wrap two">
+  <div>
+    <span class="kicker">Who it's for</span>
+    <h2 class="h-display"><span class="ar">لمين؟</span><span class="en">Who it's for</span></h2>
+    <p class="intro"><span class="ar">لأي حد عايز يبني نفسه صح، في مصر والوطن العربي وأوروبا وأمريكا.</span><span class="en">For anyone ready to rebuild themselves properly, in Egypt, the Arab world, Europe and the US.</span></p>
+    <div class="chips">
+      <span><span class="ar">رجالة</span><span class="en">Men</span></span>
+      <span><span class="ar">ستات</span><span class="en">Women</span></span>
+      <span><span class="ar">مبتدئين</span><span class="en">Beginners</span></span>
+      <span><span class="ar">متقدمين</span><span class="en">Advanced</span></span>
+      <span><span class="ar">رياضيين</span><span class="en">Athletes</span></span>
+    </div>
+  </div>
+  <div>
+    <span class="kicker">What you get</span>
+    <h2 class="h-display"><span class="ar">هتاخد إيه</span><span class="en">What you get</span></h2>
+    <ul class="gets">
+      <li><span class="ar">برنامج تمرين معمول ليك</span><span class="en">A training program made for you</span></li>
+      <li><span class="ar">نظام أكل معمول ليك</span><span class="en">A nutrition plan made for you</span></li>
+      <li><span class="ar">متابعة كل أسبوع</span><span class="en">Weekly check-ins</span></li>
+      <li><span class="ar">دعم على الواتساب</span><span class="en">WhatsApp support</span></li>
+      <li><span class="ar">مراجعة تكنيك التمارين</span><span class="en">Exercise form review</span></li>
+      <li class="note"><span class="ar">اللي بتاخده بيختلف حسب الباقة. شوف التفاصيل تحت.</span><span class="en">What's included depends on the plan. See the details below.</span></li>
+    </ul>
+  </div>
+</div></section>
+
+<section id="results"><div class="wrap">
+  <span class="kicker">Client results</span>
+  <h2 class="h-display"><span class="ar">نتايج حقيقية</span><span class="en">Real results</span></h2>
+  <p class="intro"><span class="ar">كل صورة هنا بإذن صاحبها.</span><span class="en">Every photo here is shared with the client's permission.</span></p>
+  <div class="results">
+    <figure><div class="ph"><span class="ar">صورة قبل / بعد<br>هتتحط هنا</span><span class="en">Before / after photo<br>goes here</span></div><figcaption><span class="ar">اسم العميل · المدة · النتيجة</span><span class="en">Client name · time · result</span></figcaption></figure>
+    <figure><div class="ph"><span class="ar">صورة قبل / بعد<br>هتتحط هنا</span><span class="en">Before / after photo<br>goes here</span></div><figcaption><span class="ar">اسم العميل · المدة · النتيجة</span><span class="en">Client name · time · result</span></figcaption></figure>
+    <figure><div class="ph"><span class="ar">صورة قبل / بعد<br>هتتحط هنا</span><span class="en">Before / after photo<br>goes here</span></div><figcaption><span class="ar">اسم العميل · المدة · النتيجة</span><span class="en">Client name · time · result</span></figcaption></figure>
+  </div>
+</div></section>
+
+<section id="how" class="alt"><div class="wrap">
+  <span class="kicker">How it works</span>
+  <h2 class="h-display"><span class="ar">من الفورم لخطتك</span><span class="en">From form to plan</span></h2>
+  <ol class="steps">
+    <li><div class="when h-display"><span class="ar">النهارده</span><span class="en">Today</span></div><h3><span class="ar">تملا الفورم</span><span class="en">Fill the form</span></h3><p><span class="ar">بياناتك وهدفك وتمرينك وأكلك. حوالي ٥ دقايق.</span><span class="en">Your details, goal, training and food. About 5 minutes.</span></p></li>
+    <li><div class="when h-display"><span class="ar">خلال ٦ ساعات</span><span class="en">Within 6 hours</span></div><h3><span class="ar">الكوتش يكلمك</span><span class="en">Coach contacts you</span></h3><p><span class="ar">يراجع إجاباتك ويأكد معاك الباقة.</span><span class="en">He reviews your answers and confirms your plan.</span></p></li>
+    <li><div class="when h-display"><span class="ar">بعد التأكيد</span><span class="en">After confirming</span></div><h3><span class="ar">تدفع وتبعت الصورة</span><span class="en">Pay and send proof</span></h3><p><span class="ar">ادفع وابعت صورة التحويل على الواتساب.</span><span class="en">Pay and send a screenshot of the payment on WhatsApp.</span></p></li>
+    <li><div class="when h-display"><span class="ar">خلال ٤٨ ساعة</span><span class="en">Within 48 hours</span></div><h3><span class="ar">خطتك جاهزة</span><span class="en">Your plan is ready</span></h3><p><span class="ar">برنامج التمرين ونظام الأكل حسب باقتك.</span><span class="en">Your training and nutrition plan, based on your package.</span></p></li>
+    <li><div class="when h-display"><span class="ar">كل أسبوع</span><span class="en">Every week</span></div><h3><span class="ar">متابعة</span><span class="en">Check-in</span></h3><p><span class="ar">بنشوف تقدمك ونعدل لحد ما توصل.</span><span class="en">We review your progress and adjust until you get there.</span></p></li>
+  </ol>
+</div></section>
+
+<section id="plans"><div class="wrap">
+  <span class="kicker">Plans</span>
+  <h2 class="h-display"><span class="ar">اختار باقتك</span><span class="en">Choose your plan</span></h2>
+  <p class="intro"><span class="ar">الأسعار بالجنيه المصري. اختار المدة:</span><span class="en">Prices are in Egyptian pounds. Pick a length:</span></p>
+  <div class="dur" role="group" aria-label="Plan length" id="dur"></div>
+  <div class="plans" id="plansGrid"></div>
+  <div class="extras">
+    <div class="extra">
+      <div><b><span class="ar">استشارة ٦٠ دقيقة</span><span class="en">60-minute consultation</span></b><span class="num lat">250 EGP</span></div>
+      <a class="btn ghost sm" data-wa data-wa-ar="أهلاً كوتش، عايز أحجز استشارة ٦٠ دقيقة." data-wa-en="Hi Coach, I'd like to book a 60-minute consultation."><span class="ar">احجز على الواتساب</span><span class="en">Book on WhatsApp</span></a>
+    </div>
+    <div class="extra">
+      <div><b><span class="ar">من برة مصر؟</span><span class="en">Outside Egypt?</span></b><span><span class="ar">كلمنا على الواتساب ونقولك تدفع إزاي.</span><span class="en">Message us on WhatsApp and we'll tell you how to pay.</span></span></div>
+      <a class="btn ghost sm" data-wa data-wa-ar="أهلاً كوتش، أنا من برة مصر وعايز أشترك." data-wa-en="Hi Coach, I'm outside Egypt and want to join."><span class="ar">كلمنا</span><span class="en">Message us</span></a>
+    </div>
+  </div>
+  <p class="intro" style="margin-top:18px;font-size:15px"><span class="ar">معاك كود خصم؟ اكتبه في الفورم.</span><span class="en">Have a discount code? Enter it in the form.</span></p>
+</div></section>
+
+<section id="pay" class="alt"><div class="wrap">
+  <span class="kicker">Payment</span>
+  <h2 class="h-display"><span class="ar">طرق الدفع</span><span class="en">How to pay</span></h2>
+  <p class="intro"><span class="ar">ادفع بعد ما الكوتش يأكد معاك الباقة.</span><span class="en">Pay after the coach confirms your plan with you.</span></p>
+  <div class="pay">
+    <div>
+      <h3>InstaPay</h3>
+      <p><span class="ar">ادفع من اللينك أو حوّل على الحساب ده:</span><span class="en">Pay with the link, or send to this address:</span></p>
+      <span class="handle" id="ipHandle">mansourelghoul@instapay</span>
+      <a class="btn sm" id="ipLink" href="https://ipn.eg/S/mansourelghoul/instapay/8rzYBM" rel="noopener"><span class="ar">ادفع بإنستاباي</span><span class="en">Pay with InstaPay</span></a>
+    </div>
+    <div>
+      <h3><span class="ar">فودافون كاش</span><span class="en">Vodafone Cash</span></h3>
+      <p><span class="ar">الكوتش هيبعتلك الرقم على الواتساب لما يأكد معاك.</span><span class="en">The coach sends you the number on WhatsApp when he confirms your plan.</span></p>
+    </div>
+    <div>
+      <h3><span class="ar">تحويل بنكي</span><span class="en">Bank transfer</span></h3>
+      <p><span class="ar">بيانات الحساب هتوصلك على الواتساب لما الكوتش يأكد معاك.</span><span class="en">You get the account details on WhatsApp when the coach confirms your plan.</span></p>
+    </div>
+  </div>
+  <div class="pay-flow">
+    <span><b>1</b> <span class="ar">ادفع</span><span class="en">Pay</span></span>
+    <span><b>2</b> <span class="ar">ابعت صورة التحويل على الواتساب</span><span class="en">Send the payment screenshot on WhatsApp</span></span>
+    <span><b>3</b> <span class="ar">خطتك توصلك خلال ٤٨ ساعة</span><span class="en">Your plan arrives within 48 hours</span></span>
+  </div>
+</div></section>
+
+<section id="coach"><div class="wrap coach">
+  <div>
+    <span class="kicker">Your coach</span>
+    <h2 class="h-display"><span class="ar">منصور الغول</span><span class="en">Mansour Elghoul</span></h2>
+    <div class="role">AKA GHOUL · PERSONAL TRAINER &amp; POWERLIFTING COACH</div>
+    <div class="ar">
+      <p>بدأت رحلتي في الرياضة كلاعب باسكت، وبتمرن في الجيم من أكتر من ١٦ سنة.</p>
+      <p>أنا مدرب شخصي معتمد (CPT) وعندي خبرة أكتر من ٩ سنين في التدريب، ساعدت فيهم ناس كتير تغير شكل جسمها وتبني قوة وتحسن أداءها.</p>
+      <p>من حوالي ٦ سنين اتخصصت في الباورليفتنج وتمارين القوة: تطوير القوة، وتكنيك الرفع، وتصميم برامج الأداء.</p>
+      <p>دربت بنفسي أكتر من ٥٠٠ عميل، تدريب شخصي ١:١ وجهاً لوجه.</p>
+      <div class="motto h-display">ابني قوتك. اتعلم الالتزام. طلّع أحسن ما فيك.</div>
+      <p>ده مش مجرد تمرين. ده نظام مبني على الأداء والاستمرار والنتايج.</p>
+    </div>
+    <div class="en">
+      <p>My journey in sports started as a basketball player, and I've been training in the gym for over 16 years.</p>
+      <p>I'm a Certified Personal Trainer (CPT) with over 9 years of coaching experience, helping people transform their physiques, build strength and improve their performance.</p>
+      <p>For almost 6 years I've specialized in powerlifting and strength training: strength development, lifting technique and performance programming.</p>
+      <p>I've personally trained 500+ clients through 1-on-1 in-person coaching.</p>
+      <div class="motto h-display">Build strength. Develop discipline. Unlock your potential.</div>
+      <p>This is more than training. It's a system built around performance, consistency and results.</p>
+    </div>
+    <div class="cfacts">
+      <div><b class="num">16+</b><span><span class="ar">سنة في الجيم</span><span class="en">years training</span></span></div>
+      <div><b class="num">9+</b><span><span class="ar">سنين تدريب</span><span class="en">years coaching</span></span></div>
+      <div><b class="num">~6</b><span><span class="ar">سنين باورليفتنج</span><span class="en">years powerlifting</span></span></div>
+      <div><b class="num">500+</b><span><span class="ar">عميل ١:١</span><span class="en">1-on-1 clients</span></span></div>
+    </div>
+  </div>
+  <div class="ph"><span class="ar">صورة الكوتش في الجيم<br>هتتحط هنا</span><span class="en">Coach photo in the gym<br>goes here</span></div>
+</div></section>
+
+<section id="before" class="alt"><div class="wrap">
+  <span class="kicker">Before you start</span>
+  <h2 class="h-display"><span class="ar">قبل ما تبدأ</span><span class="en">Before you start</span></h2>
+  <p class="intro"><span class="ar">جهّز الحاجتين دول وابعتهم على الواتساب بعد الفورم.</span><span class="en">Have these two ready and send them on WhatsApp after the form.</span></p>
+  <div class="before">
+    <div><b><span class="ar">قياس InBody</span><span class="en">An InBody scan</span></b><p><span class="ar">صورة واضحة لورقة القياس.</span><span class="en">A clear photo of the printout.</span></p></div>
+    <div><b><span class="ar">تاريخ الإصابات</span><span class="en">Your injury history</span></b><p><span class="ar">أي إصابة أو عملية أو مرض مزمن، حتى لو قديم.</span><span class="en">Any injury, surgery or long-term condition, even an old one.</span></p></div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <span class="kicker">FAQ</span>
+  <h2 class="h-display"><span class="ar">أسئلة بتتسأل كتير</span><span class="en">Common questions</span></h2>
+  <div class="faq">
+    <details><summary><span class="ar">خطتي هتجهز إمتى؟</span><span class="en">When is my plan ready?</span></summary><p><span class="ar">الكوتش بيكلمك خلال ٦ ساعات من الفورم يأكد معاك، وبعد الدفع خطتك بتجهز خلال ٤٨ ساعة.</span><span class="en">The coach contacts you within 6 hours of the form to confirm. After you pay, your plan is ready within 48 hours.</span></p></details>
+    <details><summary><span class="ar">بدفع إزاي؟</span><span class="en">How do I pay?</span></summary><p><span class="ar">إنستاباي أو فودافون كاش أو تحويل بنكي. وبعد الدفع ابعت صورة التحويل على الواتساب.</span><span class="en">InstaPay, Vodafone Cash or bank transfer. After paying, send a screenshot of the payment on WhatsApp.</span></p></details>
+    <details><summary><span class="ar">ينفع أسترجع فلوسي؟</span><span class="en">Can I get a refund?</span></summary><p><span class="ar">بمجرد ما خطتك توصلك، مفيش استرجاع.</span><span class="en">Once you receive your plan, there are no refunds.</span></p></details>
+    <details><summary><span class="ar">المتابعة كل قد إيه؟</span><span class="en">How often are check-ins?</span></summary><p><span class="ar">كل أسبوع.</span><span class="en">Every week.</span></p></details>
+    <details><summary><span class="ar">أنا برة مصر، ينفع أشترك؟</span><span class="en">I'm outside Egypt. Can I join?</span></summary><p><span class="ar">آه. الأسعار بالجنيه المصري، كلمنا على الواتساب ونقولك تدفع إزاي.</span><span class="en">Yes. Prices are in Egyptian pounds. Message us on WhatsApp and we'll tell you how to pay.</span></p></details>
+    <details><summary><span class="ar">بتدرب في الجيم كمان؟</span><span class="en">Do you also train people in the gym?</span></summary><p><span class="ar">آه، فيه تدريب شخصي ١:١ في الجيم. كلمنا على الواتساب نتفق على التفاصيل.</span><span class="en">Yes, 1-on-1 personal training in the gym. Message us on WhatsApp to arrange the details.</span></p></details>
+    <details><summary><span class="ar">محتاج إيه قبل ما أبدأ؟</span><span class="en">What do I need before I start?</span></summary><p><span class="ar">قياس InBody وتاريخ الإصابات بتاعك.</span><span class="en">An InBody scan and your injury history.</span></p></details>
+  </div>
+</div></section>
+
+<section class="final alt"><div class="wrap">
+  <h2 class="h-display"><span class="ar">جاهز تبدأ؟</span><span class="en">Ready to start?</span></h2>
+  <p><span class="ar">الفورم ٥ دقايق. الكوتش يكلمك خلال ٦ ساعات.</span><span class="en">The form takes 5 minutes. The coach contacts you within 6 hours.</span></p>
+  <a class="btn" href="start.html"><span class="ar">ابدأ الفورم</span><span class="en">Start the form</span> <span class="arrow" aria-hidden="true">→</span></a>
+</div></section>
+</main>
+
+<footer class="site-foot"><div class="wrap">
+  <span>© <span class="ar">الغول · منصور الغول</span><span class="en">ELGHOUL · Mansour Elghoul</span></span>
+  <div class="foot-links">
+    <a data-ig rel="noopener">Instagram</a>
+    <a data-wa>WhatsApp</a>
+    <a data-mail></a>
+  </div>
+</div></footer>
+
+<a class="wa-float" data-wa data-wa-ar="أهلاً كوتش" data-wa-en="Hi Coach" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+</a>
+
+<script src="js/site.js"></script>
+<script src="js/plans.js"></script>
+<script>
+(function(){
+  var P=window.GHOUL_PLANS, dur=P.defaultDuration;
+  var durEl=document.getElementById("dur"), grid=document.getElementById("plansGrid");
+  var g=window.GHOUL;
+  document.getElementById("ipHandle").textContent=g.instapayHandle;
+  document.getElementById("ipLink").href=g.instapayLink;
+  function render(){
+    var lang=window.ghoulLang();
+    durEl.innerHTML=P.durations.map(function(m){return '<button type="button" aria-pressed="'+(m===dur)+'" data-m="'+m+'">'+window.ghoulDur(m,lang)+'</button>';}).join("");
+    grid.innerHTML=P.plans.map(function(p){
+      var price=p.prices[dur], per=dur>1?Math.round(price/dur):0, hot=p.id===P.popular;
+      return '<article class="plan'+(hot?' hot':'')+'">'+
+        '<span class="tag">'+(lang==="ar"?"الأكثر طلباً":"Most chosen")+'</span>'+
+        '<h3>'+p.name+'</h3>'+
+        '<div class="price">'+price.toLocaleString("en-US")+' <small>EGP</small></div>'+
+        '<div class="per">'+(lang==="ar"?window.ghoulDur(dur,"ar"):window.ghoulDur(dur,"en"))+(per?(lang==="ar"?' · حوالي '+per.toLocaleString("en-US")+' جنيه في الشهر':' · about '+per.toLocaleString("en-US")+' EGP a month'):'')+'</div>'+
+        '<ul>'+p.features[lang].map(function(f){return "<li>"+f+"</li>";}).join("")+'</ul>'+
+        '<a class="btn'+(hot?'':' ghost')+'" href="start.html?plan='+p.id+'&months='+dur+'">'+(lang==="ar"?"اختار الباقة دي":"Choose this plan")+'</a>'+
+      '</article>';
+    }).join("");
+  }
+  durEl.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;dur=+b.dataset.m;render();});
+  document.addEventListener("ghoul:lang",render);
+  render();
+})();
+</script>
+</body>
+</html>

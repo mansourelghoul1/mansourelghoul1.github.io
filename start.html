@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-ar="ابدأ · الغول" data-en="Start · ELGHOUL">ابدأ · الغول</title>
+<meta name="description" content="Sign up for coaching with Coach Mansour Elghoul.">
+<meta name="theme-color" content="#1A0E22">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Alexandria:wght@300;400;500;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ghoul.css">
+<style>
+body{padding-bottom:120px}
+.form-wrap{max-width:680px;margin:0 auto;padding:26px 20px}
+.progress{display:flex;gap:6px;margin:6px 0 26px}
+.progress span{flex:1;font-size:12.5px;color:var(--bone-3);border-top:4px solid var(--plum-2);padding-top:8px;line-height:1.3}
+.progress span.done{border-color:var(--bone-3);color:var(--bone-2)}
+.progress span.now{border-color:var(--ember);color:var(--bone)}
+h1.h-display{font-size:clamp(40px,8vw,58px)}
+html[lang=en] h1.h-display{font-size:clamp(34px,7vw,50px)}
+.sub{color:var(--bone-2);margin-bottom:18px}
+.q{background:var(--plum);border-radius:var(--r);padding:20px;margin-bottom:12px;border:1.5px solid transparent}
+.q.err{border-color:var(--bad)}
+.q .label{display:block;font-weight:500;margin-bottom:4px;font-size:16.5px}
+.q .label i{color:var(--ember);font-style:normal}
+.hint{font-size:14px;color:var(--bone-2);margin-bottom:10px}
+.errmsg{display:none;color:var(--bad);font-size:14px;margin-top:8px}
+.q.err .errmsg{display:block}
+input[type=text],input[type=tel],input[type=email],input[type=number],input[type=time],textarea{width:100%;font-size:16px;background:var(--night);border:1.5px solid var(--plum-2);border-radius:12px;padding:14px 15px;color:var(--bone)}
+input::placeholder,textarea::placeholder{color:var(--bone-3)}
+input:focus,textarea:focus{outline:none;border-color:var(--ember)}
+input[type=time]{color-scheme:dark}
+textarea{min-height:96px;resize:vertical}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.row label{display:block;font-size:14px;color:var(--bone-2);margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chips button{font-size:15.5px;background:var(--night);border:1.5px solid var(--plum-2);border-radius:12px;padding:11px 17px;cursor:pointer;min-height:46px}
+.chips button[aria-pressed=true]{background:var(--ember);border-color:var(--ember);color:var(--ember-ink);font-weight:500}
+.reveal{margin-top:12px}
+.pkg{display:grid;gap:10px;margin-top:6px}
+.pkg button{display:flex;justify-content:space-between;align-items:center;gap:14px;text-align:start;background:var(--night);border:1.5px solid var(--plum-2);border-radius:14px;padding:16px 18px;cursor:pointer}
+.pkg button[aria-pressed=true]{border-color:var(--ember);box-shadow:inset 0 0 0 1.5px var(--ember)}
+.pkg b{font:800 18px/1.2 var(--en-display);letter-spacing:.05em;display:block}
+.pkg small{color:var(--bone-2);font-size:13.5px;display:block;margin-top:3px}
+.pkg .pr{font:800 20px/1 var(--en-display);white-space:nowrap;direction:ltr}
+.pkg .pop{display:inline-block;background:var(--ember);color:var(--ember-ink);font:500 11.5px var(--body);padding:2px 9px;border-radius:999px;margin-inline-start:8px;vertical-align:2px}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:var(--night);border-radius:14px;padding:16px 18px;margin-top:12px}
+.total b{font:800 26px/1 var(--en-display);direction:ltr}
+.total s{color:var(--bone-3);font-size:15px;margin-inline-end:8px}
+.code{display:flex;gap:8px}
+.code input{flex:1;text-transform:uppercase}
+.code .btn{flex:0 0 auto}
+.codemsg{font-size:14px;margin-top:8px;min-height:20px}
+.codemsg.ok{color:var(--ok)} .codemsg.bad{color:var(--bad)}
+.stepper{display:flex;align-items:center;gap:14px}
+.stepper button{width:48px;height:48px;border-radius:12px;background:var(--night);border:1.5px solid var(--plum-2);font-size:22px;cursor:pointer}
+.stepper output{font:800 30px/1 var(--en-display);min-width:40px;text-align:center}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(26,14,34,.95);backdrop-filter:blur(8px);border-top:1px solid var(--plum-2);padding:12px 18px calc(12px + env(safe-area-inset-bottom))}
+.bar .in{max-width:680px;margin:0 auto;display:flex;gap:10px}
+.bar .btn{flex:1}
+.bar .btn.back{flex:0 0 auto;background:transparent;color:var(--bone);box-shadow:inset 0 0 0 1.5px var(--plum-3)}
+.notice{background:var(--plum);border-inline-start:4px solid var(--ember);border-radius:12px;padding:14px 16px;margin:14px 0;font-size:15px}
+.done-list{list-style:none;padding:0;margin:18px 0}
+.done-list li{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--plum-2)}
+.done-list li b{color:var(--ember);font:800 20px/1.4 var(--en-display);min-width:20px}
+.handle{font:500 15px/1.4 var(--body);direction:ltr;unicode-bidi:isolate;background:var(--night);border-radius:10px;padding:8px 10px;display:inline-block;word-break:break-all;margin-top:6px}
+.stack{display:grid;gap:10px;margin-top:16px}
+@media (max-width:480px){.row{grid-template-columns:1fr 1fr}.row > div:first-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="logo" href="index.html"><span class="mark">الغول<b>.</b></span><span class="word">ELGHOUL</span></a>
+  <div class="head-actions">
+    <div class="langs" role="group" aria-label="Language / اللغة"><button type="button" data-lang-btn="ar">ع</button><button type="button" data-lang-btn="en">EN</button></div>
+  </div>
+</div></header>
+
+<main class="form-wrap" id="app" aria-live="polite"></main>
+<div class="bar" id="bar"><div class="in" id="barIn"></div></div>
+
+<script src="js/site.js"></script>
+<script src="js/plans.js"></script>
+<script>
+/* ================= SETTINGS =================
+   Where the answers go. Paste his Google Apps Script web-app URL here
+   (see setup/GOOGLE-SHEET.md). Leave it empty and the form sends the
+   answers to his WhatsApp instead, so it works from day one.        */
+var FORM_ENDPOINT = "";
+/* ============================================ */
+
+(function(){
+"use strict";
+var P=window.GHOUL_PLANS, G=window.GHOUL;
+var T=function(ar,en){return window.ghoulLang()==="ar"?ar:en;};
+var STEPS=[
+  {ar:"الباقة",en:"Plan"},
+  {ar:"بياناتك",en:"About you"},
+  {ar:"التمرين",en:"Training"},
+  {ar:"الأكل ويومك",en:"Food & day"}
+];
+var OPT={
+  goal:[["Fat loss","حرق دهون"],["Muscle gain","بناء عضل"],["Fat loss + muscle","حرق + بناء"],["Strength","زيادة القوة"],["Fitness","تحسين اللياقة"]],
+  level:[["Beginner","مبتدئ"],["Intermediate","متوسط"],["Advanced","متقدم"]],
+  injury:[["None","مفيش"],["Yes","عندي"]],
+  gym:[["Full gym","جيم كامل"],["Small gym","جيم صغير"],["Home","في البيت"]],
+  foods:[["Dairy","الألبان"],["Eggs","البيض"],["Fish","السمك"],["Red meat","اللحمة"],["Chicken","الفراخ"],["Rice","الرز"],["Pasta","المكرونة"],["Vegetables","الخضار"]],
+  supps:[["No","لأ"],["Yes","آه"]]
+};
+
+/* ---- state, saved on this device so a reload keeps the answers ---- */
+var KEY="ghoul-form-v1", D, step=0, view="form", sentOk=false;
+var blank={plan:"",months:P.defaultDuration,code:"",codePct:0,name:"",age:"",height:"",weight:"",whatsapp:"",email:"",goal:"",level:"",days:4,injury:"",injury_details:"",gym:"",foods:[],foods_other:"",supps:"",supps_list:"",wake:"",sleep:"",train_time:""};
+try{D=Object.assign({},blank,JSON.parse(localStorage.getItem(KEY)||"{}"));}catch(e){D=Object.assign({},blank);}
+var qs=new URLSearchParams(location.search);
+if(qs.get("plan")&&P.plans.some(function(p){return p.id===qs.get("plan");}))D.plan=qs.get("plan");
+if(P.durations.indexOf(+qs.get("months"))>-1)D.months=+qs.get("months");
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D));}catch(e){}}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+function plan(){return P.plans.filter(function(p){return p.id===D.plan;})[0];}
+function price(){var p=plan();return p?p.prices[D.months]:0;}
+function finalPrice(){return Math.round(price()*(100-(D.codePct||0))/100);}
+function label(list,v){var o=OPT[list].filter(function(x){return x[0]===v;})[0];return o?T(o[1],o[0]):v;}
+
+/* ---- building blocks ---- */
+function q(id,title,inner,opts){opts=opts||{};
+  return '<div class="q" data-q="'+id+'"><span class="label">'+title+(opts.req!==false?' <i>*</i>':'')+'</span>'+(opts.hint?'<div class="hint">'+opts.hint+'</div>':'')+inner+'<div class="errmsg">'+(opts.err||T("محتاجين الإجابة دي","Please answer this"))+'</div></div>';}
+function chips(id,list,multi){
+  return '<div class="chips" role="group" data-chips="'+id+'"'+(multi?' data-multi="1"':'')+'>'+OPT[list].map(function(o){
+    var on=multi?D[id].indexOf(o[0])>-1:D[id]===o[0];
+    return '<button type="button" aria-pressed="'+on+'" data-v="'+esc(o[0])+'">'+T(o[1],o[0])+'</button>';}).join("")+'</div>';}
+function input(id,type,ph,extra){return '<input type="'+type+'" id="f_'+id+'" data-f="'+id+'" value="'+esc(D[id])+'" placeholder="'+esc(ph||"")+'" '+(extra||"")+'>';}
+
+function stepHtml(){
+  var h='<div class="progress">'+STEPS.map(function(s,i){return '<span class="'+(i<step?'done':i===step?'now':'')+'">'+T(s.ar,s.en)+'</span>';}).join("")+'</div>';
+  if(step===0){
+    h+='<h1 class="h-display">'+T("اختار باقتك","Choose your plan")+'</h1><p class="sub">'+T("تقدر تغيرها بعدين مع الكوتش.","You can change it later with the coach.")+'</p>';
+    h+=q("plan",T("الباقة","Plan"),'<div class="pkg" role="group" data-pkg>'+P.plans.map(function(p){
+      return '<button type="button" aria-pressed="'+(D.plan===p.id)+'" data-v="'+p.id+'"><span><b>'+p.name+(p.id===P.popular?'<span class="pop">'+T("الأكثر طلباً","Most chosen")+'</span>':'')+'</b><small>'+p.features[window.ghoulLang()].slice(0,3).join(" · ")+'</small></span><span class="pr">'+p.prices[D.months].toLocaleString("en-US")+' EGP</span></button>';}).join("")+'</div>');
+    h+=q("months",T("المدة","Length"),'<div class="chips" role="group" data-months>'+P.durations.map(function(m){return '<button type="button" aria-pressed="'+(D.months===m)+'" data-v="'+m+'">'+window.ghoulDur(m,window.ghoulLang())+'</button>';}).join("")+'</div>');
+    h+=q("code",T("كود خصم","Discount code"),'<div class="code">'+input("code","text",T("لو معاك","If you have one"),'autocapitalize="characters" autocomplete="off"')+'<button type="button" class="btn ghost sm" id="applyCode">'+T("طبّق","Apply")+'</button></div><div class="codemsg" id="codemsg"></div>',{req:false});
+    if(plan()) h+='<div class="total"><span>'+T("الإجمالي","Total")+'</span><span>'+(D.codePct?'<s>'+price().toLocaleString("en-US")+'</s>':'')+'<b>'+finalPrice().toLocaleString("en-US")+' EGP</b></span></div>';
+  }
+  if(step===1){
+    h+='<h1 class="h-display">'+T("بياناتك","About you")+'</h1><p class="sub">'+T("علشان الخطة تبقى على مقاس جسمك.","So your plan fits your body.")+'</p>';
+    h+=q("name",T("اسمك بالكامل","Full name"),input("name","text",T("مثال: محمد أحمد علي","e.g. Mohamed Ahmed Ali"),'autocomplete="name"'));
+    h+=q("body",T("السن والطول والوزن","Age, height and weight"),'<div class="row"><div><label for="f_age">'+T("السن","Age")+'</label>'+input("age","number","27",'inputmode="numeric" min="12" max="90"')+'</div><div><label for="f_height">'+T("الطول (سم)","Height (cm)")+'</label>'+input("height","number","175",'inputmode="numeric" min="120" max="230"')+'</div><div><label for="f_weight">'+T("الوزن (كجم)","Weight (kg)")+'</label>'+input("weight","number","80",'inputmode="decimal" min="30" max="300" step="0.1"')+'</div></div>');
+    h+=q("whatsapp",T("رقم الواتساب","WhatsApp number"),input("whatsapp","tel","+20 10 0000 0000",'inputmode="tel" dir="ltr" autocomplete="tel"'),{err:T("اكتب رقم صحيح","Enter a valid number")});
+    h+=q("email",T("الإيميل","Email"),input("email","email","name@gmail.com",'inputmode="email" dir="ltr" autocapitalize="off" autocomplete="email"'),{req:false,err:T("الإيميل مش مظبوط","That email doesn't look right")});
+  }
+  if(step===2){
+    h+='<h1 class="h-display">'+T("التمرين","Training")+'</h1><p class="sub">'+T("علشان البرنامج يناسب مستواك وجيمك.","So the program fits your level and your gym.")+'</p>';
+    h+=q("goal",T("هدفك إيه؟","What's your goal?"),chips("goal","goal"));
+    h+=q("level",T("مستواك دلوقتي","Your current level"),chips("level","level"));
+    h+=q("days",T("هتتمرن كام يوم في الأسبوع؟","How many days a week can you train?"),'<div class="stepper"><button type="button" data-step="-1" aria-label="−">−</button><output id="daysOut">'+D.days+'</output><button type="button" data-step="1" aria-label="+">+</button></div>');
+    h+=q("injury",T("عندك إصابة أو مرض مزمن؟","Any injury or long-term condition?"),chips("injury","injury")+(D.injury==="Yes"?'<div class="reveal">'+'<textarea data-f="injury_details" id="f_injury_details" placeholder="'+T("اكتب الإصابة أو المرض وإمتى حصل","Describe it and when it happened")+'">'+esc(D.injury_details)+'</textarea></div>':''),{err:T("اختار، ولو عندك اكتب التفاصيل","Choose one, and add details if yes")});
+    h+=q("gym",T("هتتمرن فين؟","Where will you train?"),chips("gym","gym"));
+  }
+  if(step===3){
+    h+='<h1 class="h-display">'+T("الأكل ويومك","Food & your day")+'</h1><p class="sub">'+T("علشان نظام الأكل يمشي مع حياتك.","So the nutrition plan fits your life.")+'</p>';
+    h+=q("foods",T("أكلات مش بتحبها","Foods you don't eat"),chips("foods","foods",true)+'<div class="reveal">'+input("foods_other","text",T("حاجة تانية؟","Anything else?"))+'</div>',{req:false,hint:T("اختار كل اللي ينطبق","Tap all that apply")});
+    h+=q("supps",T("بتاخد مكملات؟","Do you take supplements?"),chips("supps","supps")+(D.supps==="Yes"?'<div class="reveal">'+input("supps_list","text",T("إيه هي؟ مثال: واي بروتين، كرياتين","Which ones? e.g. whey, creatine"))+'</div>':''),{err:T("اختار، ولو آه اكتب إيه هي","Choose one, and list them if yes")});
+    h+=q("times",T("مواعيد يومك","Your daily times"),'<div class="row"><div><label for="f_wake">'+T("بتصحى","Wake up")+'</label>'+input("wake","time","")+'</div><div><label for="f_sleep">'+T("بتنام","Sleep")+'</label>'+input("sleep","time","")+'</div><div><label for="f_train_time">'+T("بتتمرن","Train")+'</label>'+input("train_time","time","")+'</div></div>');
+    h+='<div class="notice">'+T("بعد الفورم ابعت على الواتساب: قياس InBody وتاريخ الإصابات.","After the form, send on WhatsApp: your InBody scan and injury history.")+'</div>';
+  }
+  return h;
+}
+
+/* ---- the WhatsApp text and the Sheet row ---- */
+function times(){return [D.wake&&T("صحيان ","Wake ")+D.wake,D.sleep&&T("نوم ","Sleep ")+D.sleep,D.train_time&&T("تمرين ","Train ")+D.train_time].filter(Boolean).join(" · ");}
+function summary(){
+  var p=plan(), L=[];
+  L.push(T("*فورم جديد · الغول*","*New ELGHOUL sign-up*"));
+  L.push("");
+  L.push(T("الباقة: ","Plan: ")+(p?p.name:"")+" · "+window.ghoulDur(D.months,window.ghoulLang())+" · "+finalPrice().toLocaleString("en-US")+" EGP"+(D.codePct?" ("+D.code.toUpperCase()+" −"+D.codePct+"%)":""));
+  L.push(T("الاسم: ","Name: ")+D.name);
+  L.push(T("السن/الطول/الوزن: ","Age/height/weight: ")+D.age+" / "+D.height+"cm / "+D.weight+"kg");
+  L.push(T("واتساب: ","WhatsApp: ")+D.whatsapp+(D.email?" · "+D.email:""));
+  L.push(T("الهدف: ","Goal: ")+label("goal",D.goal)+" · "+T("المستوى: ","Level: ")+label("level",D.level));
+  L.push(T("أيام التمرين: ","Training days: ")+D.days+" · "+T("المكان: ","Where: ")+label("gym",D.gym));
+  L.push(T("إصابات: ","Injuries: ")+(D.injury==="Yes"?D.injury_details:label("injury",D.injury)));
+  var foods=D.foods.map(function(f){return label("foods",f);}).concat(D.foods_other?[D.foods_other]:[]);
+  L.push(T("مش بياكل: ","Doesn't eat: ")+(foods.join(T("، ",", "))||"—"));
+  L.push(T("مكملات: ","Supplements: ")+(D.supps==="Yes"?D.supps_list:label("supps",D.supps)));
+  L.push(T("المواعيد: ","Times: ")+times());
+  return L.join("\n");
+}
+function payload(){
+  var p=plan();
+  return {
+    submission_date:new Date().toISOString(), form_lang:window.ghoulLang(),
+    plan:p?p.name:"", months:D.months, list_price_egp:price(), discount_code:D.codePct?D.code.toUpperCase():"", discount_pct:D.codePct||0, price_egp:finalPrice(),
+    client_name:D.name, age:D.age, height_cm:D.height, weight_kg:D.weight, whatsapp_number:D.whatsapp, email:D.email,
+    fitness_goal:D.goal, fitness_level:D.level, training_days_per_week:D.days,
+    injuries:D.injury==="Yes"?("Yes - "+D.injury_details):D.injury, gym_type:D.gym,
+    disliked_foods:D.foods.concat(D.foods_other?[D.foods_other]:[]).join(", "),
+    supplements:D.supps==="Yes"?("Yes - "+D.supps_list):D.supps,
+    wake_up_time:D.wake, sleep_time:D.sleep, training_time:D.train_time
+  };
+}
+function waLink(text){return "https://wa.me/"+G.whatsapp+"?text="+encodeURIComponent(text);}
+
+/* ---- checks ---- */
+function errors(){
+  var e=[];
+  if(step===0){if(!D.plan)e.push("plan");}
+  if(step===1){
+    if(!D.name.trim())e.push("name");
+    if(!(+D.age>0&&+D.height>0&&+D.weight>0))e.push("body");
+    if(D.whatsapp.replace(/\D/g,"").length<8)e.push("whatsapp");
+    if(D.email.trim()&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(D.email.trim()))e.push("email");
+  }
+  if(step===2){
+    ["goal","level","gym"].forEach(function(k){if(!D[k])e.push(k);});
+    if(!D.injury||(D.injury==="Yes"&&!D.injury_details.trim()))e.push("injury");
+  }
+  if(step===3){
+    if(!D.supps||(D.supps==="Yes"&&!D.supps_list.trim()))e.push("supps");
+    if(!D.wake||!D.sleep||!D.train_time)e.push("times");
+  }
+  return e;
+}
+var shown=false;
+function markErrors(){
+  var e=errors();
+  document.querySelectorAll(".q").forEach(function(el){el.classList.toggle("err",e.indexOf(el.dataset.q)>-1);});
+  return e;
+}
+
+/* ---- render ---- */
+var app=document.getElementById("app"), barIn=document.getElementById("barIn");
+function render(keepScroll){
+  var y=window.scrollY;
+  if(view==="form"){
+    app.innerHTML=stepHtml();
+    barIn.innerHTML=(step>0?'<button type="button" class="btn back" id="back">'+T("رجوع","Back")+'</button>':'')+
+      '<button type="button" class="btn" id="next">'+(step<STEPS.length-1?T("التالي","Next"):T("ابعت الفورم","Send the form"))+'</button>';
+    document.getElementById("bar").hidden=false;
+    if(shown)markErrors();
+  } else {
+    app.innerHTML=doneHtml();
+    document.getElementById("bar").hidden=true;
+  }
+  wire();
+  window.scrollTo(0,keepScroll?y:0);
+}
+function doneHtml(){
+  var wa=waLink(summary());
+  var h='<h1 class="h-display">'+(sentOk?T("وصلت ✓","Received ✓"):T("خطوة أخيرة","One last step"))+'</h1>';
+  if(sentOk){
+    h+='<p class="sub">'+T("الكوتش هيكلمك على الواتساب خلال ٦ ساعات يأكد معاك.","The coach will contact you on WhatsApp within 6 hours to confirm.")+'</p>';
+  } else {
+    h+='<p class="sub">'+T("اضغط تحت علشان تبعت إجاباتك للكوتش على الواتساب، وبعدين اضغط إرسال.","Tap below to send your answers to the coach on WhatsApp, then press send.")+'</p>'+
+       '<a class="btn" style="width:100%" href="'+wa+'">'+T("ابعت إجاباتي على الواتساب","Send my answers on WhatsApp")+'</a>';
+  }
+  h+='<ol class="done-list">'+
+     '<li><b>1</b><span>'+T("الكوتش يكلمك خلال ٦ ساعات ويأكد الباقة.","The coach contacts you within 6 hours and confirms your plan.")+'</span></li>'+
+     '<li><b>2</b><span>'+T("ادفع ","Pay ")+'<b class="lat" style="font-size:inherit;color:var(--bone)">'+finalPrice().toLocaleString("en-US")+' EGP</b>'+T(" بإنستاباي أو فودافون كاش أو تحويل بنكي.<br>"," by InstaPay, Vodafone Cash or bank transfer.<br>")+'<span class="handle">'+esc(G.instapayHandle)+'</span></span></li>'+
+     '<li><b>3</b><span>'+T("ابعت على الواتساب: صورة التحويل، وقياس InBody، وتاريخ الإصابات.","Send on WhatsApp: the payment screenshot, your InBody scan and your injury history.")+'</span></li>'+
+     '<li><b>4</b><span>'+T("خطتك توصلك خلال ٤٨ ساعة.","Your plan arrives within 48 hours.")+'</span></li></ol>';
+  h+='<div class="stack"><a class="btn ghost" href="'+esc(G.instapayLink)+'" rel="noopener">'+T("ادفع بإنستاباي","Pay with InstaPay")+'</a>'+
+     (sentOk?'<a class="btn ghost" href="'+waLink(T("أهلاً كوتش، لسه باعت الفورم.","Hi Coach, I just sent the form."))+'">'+T("كلم الكوتش على الواتساب","Message the coach on WhatsApp")+'</a>':'')+
+     '<a class="btn ghost" href="index.html">'+T("رجوع للموقع","Back to the website")+'</a></div>';
+  return h;
+}
+
+function wire(){
+  app.querySelectorAll("[data-f]").forEach(function(el){
+    el.addEventListener("input",function(){D[el.dataset.f]=el.value;save();if(shown)markErrors();});
+  });
+  app.querySelectorAll("[data-chips]").forEach(function(g){
+    g.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var k=g.dataset.chips,v=b.dataset.v;
+      if(g.dataset.multi){var i=D[k].indexOf(v);if(i>-1)D[k].splice(i,1);else D[k].push(v);}
+      else D[k]=v;
+      save();render(true);});
+  });
+  var pk=app.querySelector("[data-pkg]");
+  if(pk)pk.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;D.plan=b.dataset.v;save();render(true);});
+  var mo=app.querySelector("[data-months]");
+  if(mo)mo.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;D.months=+b.dataset.v;save();render(true);});
+  app.querySelectorAll("[data-step]").forEach(function(b){b.addEventListener("click",function(){D.days=Math.min(7,Math.max(1,D.days+ +b.dataset.step));document.getElementById("daysOut").textContent=D.days;save();});});
+  var ac=document.getElementById("applyCode");
+  if(ac){
+    var msg=document.getElementById("codemsg");
+    if(D.codePct){msg.className="codemsg ok";msg.textContent=T("الكود اتطبق: خصم ","Code applied: ")+D.codePct+"%"+T(""," off");}
+    ac.addEventListener("click",function(){
+      var c=(D.code||"").trim().toUpperCase(), pct=P.codes[c]||0;
+      D.codePct=pct;save();render(true);
+      var m=document.getElementById("codemsg");
+      if(!c){m.className="codemsg";m.textContent="";}
+      else if(!pct){m.className="codemsg bad";m.textContent=T("الكود ده مش شغال","That code doesn't work");}
+    });
+  }
+  var nx=document.getElementById("next"), bk=document.getElementById("back");
+  if(bk)bk.onclick=function(){step--;shown=false;render();};
+  if(nx)nx.onclick=function(){
+    shown=true;
+    var e=markErrors();
+    if(e.length){var f=document.querySelector(".q.err");if(f)f.scrollIntoView({behavior:"smooth",block:"center"});return;}
+    shown=false;
+    if(step<STEPS.length-1){step++;render();return;}
+    submit(nx);
+  };
+}
+
+function submit(btn){
+  if(!FORM_ENDPOINT){view="done";sentOk=false;render();return;}
+  btn.disabled=true;btn.textContent=T("بيتبعت…","Sending…");
+  fetch(FORM_ENDPOINT,{method:"POST",body:JSON.stringify(payload())}) // text/plain: no preflight, works with Apps Script
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.text();})
+    .then(function(){sentOk=true;view="done";try{localStorage.removeItem(KEY);}catch(e){}render();})
+    .catch(function(){
+      // Never lose a lead: fall back to WhatsApp with the answers.
+      sentOk=false;view="done";render();
+      app.insertAdjacentHTML("afterbegin",'<div class="notice">'+T("الفورم ماتبعتش من الموقع. إجاباتك محفوظة، ابعتها على الواتساب من الزرار تحت.","The form couldn't be sent from the site. Your answers are kept: send them on WhatsApp with the button below.")+'</div>');
+    });
+}
+
+document.addEventListener("ghoul:lang",function(){render(true);});
+render();
+})();
+</script>
+</body>
+</html>
