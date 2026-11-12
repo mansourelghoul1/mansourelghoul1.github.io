@@ -6,23 +6,19 @@ window.GHOUL_PLANS = {
   defaultDuration: 3,
   popular: "popular",
   plans: [
-    // BASIC is a one-time program, not a subscription: one price, no length to pick.
-    { id: "basic", name: "BASIC", oneTime: true, price: 399,
+    // CUSTOM PROGRAM (was BASIC) is a one-time program, not a subscription:
+    // one price, no length to pick, no online coaching.
+    { id: "basic", name: "CUSTOM PROGRAM", oneTime: true, price: 399,
       features: {
-        ar: ["برنامج تمرين معمول ليك من إجاباتك", "كل تمرين متشرح بالتفصيل", "من غير متابعة أسبوعية"],
-        en: ["A training program made for you from your answers", "Every exercise explained in detail", "No weekly check-ins"] } },
+        ar: ["برنامج تمرين معمول ليك من إجاباتك", "كل تمرين متشرح بالتفصيل", "من غير متابعة أونلاين"],
+        en: ["A training program made for you from your answers", "Every exercise explained in detail", "No online coaching or check-ins"] } },
     { id: "popular", name: "MOST POPULAR",
       prices: { 1: 799, 3: 2199, 6: 3999, 12: 7499 },
       features: {
         ar: ["برنامج تمرين معمول ليك", "نظام أكل معمول ليك", "متابعة تقدمك", "دعم على الواتساب", "رد خلال ٦ ساعات"],
         en: ["Customized workout program", "Customized nutrition plan", "Progress tracking", "WhatsApp support", "Response within 6 hours"] } },
-    { id: "advanced", name: "ADVANCED",
-      prices: { 1: 1199, 3: 3299, 6: 5999, 12: 10999 },
-      features: {
-        ar: ["كوتشينج متقدم على مقاسك", "برنامج تمرين ونظام أكل معمولين ليك", "متابعة أدائك", "ملاحظات على تكنيك التمارين", "تعديل البرنامج بشكل منتظم"],
-        en: ["Advanced personalized coaching", "Customized training & nutrition plans", "Performance monitoring", "Technique feedback", "Regular program adjustments"] } },
     { id: "vip", name: "VIP",
-      prices: { 1: 1499, 3: 3999, 6: 7299, 12: 13499 },
+      prices: { 1: 1099, 3: 2999, 6: 5499, 12: 9999 },
       features: {
         ar: ["كوتشينج بريميوم على مقاسك", "برنامج تمرين ونظام أكل معمولين ليك", "مكالمة فيديو ١:١ كل أسبوع", "٢ مكالمة فيديو وقت التمرين", "تواصل مباشر مع الكوتش", "أولوية في العروض"],
         en: ["Premium personalized coaching", "Customized training & nutrition plans", "Weekly 1:1 video call", "2 workout video calls", "Direct access to your coach", "Priority access to offers"] } }

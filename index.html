@@ -78,7 +78,7 @@ html[lang=en] .steps .when{font-size:22px}
 .dur{display:inline-flex;gap:4px;background:var(--plum);border:1px solid var(--plum-2);border-radius:14px;padding:4px;margin-top:26px;flex-wrap:wrap}
 .dur button{background:none;border:0;border-radius:10px;padding:10px 18px;font-size:15px;font-weight:500;cursor:pointer;color:var(--bone-2);min-height:44px}
 .dur button[aria-pressed=true]{background:var(--bone);color:var(--night)}
-.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px;align-items:stretch}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px;align-items:stretch}
 .plan{border:1px solid var(--plum-2);border-radius:24px;padding:28px 24px;display:flex;flex-direction:column}
 .plan h3{font:800 22px/1.1 var(--en-display);letter-spacing:.06em}
 .plan .price{font:800 38px/1 var(--en-display);margin:20px 0 4px;direction:ltr;text-align:start}
@@ -137,9 +137,10 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
 .final .h-display{font-size:clamp(42px,7vw,88px)}
 .final p{color:var(--bone-2);margin:10px auto 30px;max-width:520px}
 
-@media (max-width:1060px){.plans{grid-template-columns:1fr 1fr}.steps{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:1060px){.steps{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:900px){
-  .two,.coach,.extras,.before{grid-template-columns:1fr}
+  .two,.coach,.extras,.before,.plans{grid-template-columns:1fr}
+  .plans{max-width:520px}
   .pay{grid-template-columns:1fr}
 
   .steps{grid-template-columns:1fr 1fr}
@@ -244,7 +245,7 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
 <section id="plans"><div class="wrap">
   <span class="kicker">Plans</span>
   <h2 class="h-display"><span class="ar">اختار باقتك</span><span class="en">Choose your plan</span></h2>
-  <p class="intro"><span class="ar">الأسعار بالجنيه المصري. اختار مدة الاشتراك (BASIC دفعة واحدة):</span><span class="en">Prices are in Egyptian pounds. Pick a subscription length (BASIC is a one-time payment):</span></p>
+  <p class="intro"><span class="ar">الأسعار بالجنيه المصري. اختار مدة الاشتراك (CUSTOM PROGRAM دفعة واحدة):</span><span class="en">Prices are in Egyptian pounds. Pick a subscription length (CUSTOM PROGRAM is a one-time payment):</span></p>
   <div class="dur" role="group" aria-label="Plan length" id="dur"></div>
   <div class="plans" id="plansGrid"></div>
   <div class="extras">
@@ -335,7 +336,7 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
     <details><summary><span class="ar">خطتي هتجهز إمتى؟</span><span class="en">When is my plan ready?</span></summary><p><span class="ar">الكوتش بيكلمك خلال ٦ ساعات من الفورم يأكد معاك، وبعد الدفع خطتك بتجهز خلال ٤٨ ساعة.</span><span class="en">The coach contacts you within 6 hours of the form to confirm. After you pay, your plan is ready within 48 hours.</span></p></details>
     <details><summary><span class="ar">بدفع إزاي؟</span><span class="en">How do I pay?</span></summary><p><span class="ar">إنستاباي أو فودافون كاش أو تحويل بنكي. وبعد الدفع ابعت صورة التحويل على الواتساب.</span><span class="en">InstaPay, Vodafone Cash or bank transfer. After paying, send a screenshot of the payment on WhatsApp.</span></p></details>
     <details><summary><span class="ar">ينفع أسترجع فلوسي؟</span><span class="en">Can I get a refund?</span></summary><p><span class="ar">بمجرد ما خطتك توصلك، مفيش استرجاع.</span><span class="en">Once you receive your plan, there are no refunds.</span></p></details>
-    <details><summary><span class="ar">المتابعة كل قد إيه؟</span><span class="en">How often are check-ins?</span></summary><p><span class="ar">كل أسبوع، في كل الباقات ما عدا BASIC. BASIC برنامج تمرين بتاخده مرة واحدة من غير متابعة.</span><span class="en">Every week, on every plan except BASIC. BASIC is a one-time training program without check-ins.</span></p></details>
+    <details><summary><span class="ar">المتابعة كل قد إيه؟</span><span class="en">How often are check-ins?</span></summary><p><span class="ar">كل أسبوع، في كل الباقات ما عدا CUSTOM PROGRAM: ده برنامج تمرين بتاخده مرة واحدة من غير متابعة أونلاين.</span><span class="en">Every week, on every plan except CUSTOM PROGRAM: that's a one-time training program without online coaching.</span></p></details>
     <details><summary><span class="ar">أنا برة مصر، ينفع أشترك؟</span><span class="en">I'm outside Egypt. Can I join?</span></summary><p><span class="ar">آه. الأسعار بالجنيه المصري، كلمنا على الواتساب ونقولك تدفع إزاي.</span><span class="en">Yes. Prices are in Egyptian pounds. Message us on WhatsApp and we'll tell you how to pay.</span></p></details>
     <details><summary><span class="ar">بتدرب في الجيم كمان؟</span><span class="en">Do you also train people in the gym?</span></summary><p><span class="ar">آه، فيه تدريب شخصي ١:١ في الجيم. كلمنا على الواتساب نتفق على التفاصيل.</span><span class="en">Yes, 1-on-1 personal training in the gym. Message us on WhatsApp to arrange the details.</span></p></details>
     <details><summary><span class="ar">محتاج إيه قبل ما أبدأ؟</span><span class="en">What do I need before I start?</span></summary><p><span class="ar">قياس InBody وتاريخ الإصابات بتاعك.</span><span class="en">An InBody scan and your injury history.</span></p></details>
