@@ -46,8 +46,13 @@
 .gets .note::before{display:none}
 
 /* results */
-.results{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:40px}
-.tr{background:var(--plum);border-radius:24px;padding:12px;margin:0}
+/* results: one row that never stops moving (no pause on hover, touch or reduced motion, on request) */
+.marquee{margin-top:40px;overflow:hidden;direction:ltr;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);pointer-events:none;user-select:none}
+.marquee-track{display:flex;gap:18px;width:max-content;direction:ltr;animation:ghoul-marquee var(--marquee-time,64s) linear infinite!important;will-change:transform}
+html[dir=rtl] .marquee-track{animation-direction:reverse!important}
+@keyframes ghoul-marquee{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 9px))}}
+html[dir=rtl] .tr{direction:rtl}
+.tr{flex:0 0 340px;background:var(--plum);border-radius:24px;padding:12px;margin:0}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .shot{position:relative;aspect-ratio:3/5;border-radius:16px;overflow:hidden;background:var(--night)}
 .shot img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
@@ -59,7 +64,7 @@ html[lang=ar] .tr figcaption b{font-family:var(--ar-display)}
 html[lang=en] .tr figcaption b{font-family:var(--en-display);font-weight:800;letter-spacing:-.01em}
 .tr figcaption span{color:var(--bone-2);font-size:15px}
 .tr figcaption em{font-style:normal;color:var(--ember);font-size:14.5px}
-.results-more{text-align:center;margin-top:22px}
+
 
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px;padding:0;list-style:none}
@@ -142,7 +147,8 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
   .coach .ph{order:-1;max-width:420px}
 }
 @media (max-width:560px){
-  .plans,.results,.steps{grid-template-columns:1fr}
+  .plans,.steps{grid-template-columns:1fr}
+  .tr{flex-basis:270px}
   .tr figcaption b{font-size:26px}
   .dur{display:flex}
   .dur button{flex:1;padding:10px 8px}
@@ -219,9 +225,9 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
   <span class="kicker">Client results</span>
   <h2 class="h-display"><span class="ar">نتايج حقيقية</span><span class="en">Real results</span></h2>
   <p class="intro"><span class="ar">كل صورة هنا بإذن صاحبها.</span><span class="en">Every photo here is shared with the client's permission.</span></p>
-  <div class="results" id="resultsGrid"></div>
-  <div class="results-more"><button type="button" class="btn ghost" id="resultsMore" hidden></button></div>
-</div></section>
+</div>
+  <div class="marquee" aria-label="Client results"><div class="marquee-track" id="resultsGrid"></div></div>
+</section>
 
 <section id="how" class="alt"><div class="wrap">
   <span class="kicker">How it works</span>

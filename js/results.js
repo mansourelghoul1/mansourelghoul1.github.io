@@ -17,36 +17,33 @@ window.GHOUL_RESULTS = [
     extra: { ar: "دهون −2 كجم", en: "Fat −2 kg" } }
 ];
 
+/* Shown as one row that scrolls on its own, forever (a "marquee").
+   The cards are rendered twice so the loop has no gap; the copy is hidden
+   from screen readers. Speed: SECONDS_PER_CARD. */
 (function () {
   "use strict";
-  var grid = document.getElementById("resultsGrid"), more = document.getElementById("resultsMore");
+  var grid = document.getElementById("resultsGrid");
   if (!grid) return;
-  var SHOW = 4, open = false;
-  function render() {
-    var ar = window.ghoulLang() === "ar";
-    var list = open ? window.GHOUL_RESULTS : window.GHOUL_RESULTS.slice(0, SHOW);
-    grid.innerHTML = list.map(function (r) {
-      var line = ar ? ("من " + r.from + " لـ " + r.to + " كجم · " + r.weeks + " أسبوع")
-                    : ('<span class="num">' + r.from + " → " + r.to + " kg</span> · " + r.weeks + " weeks");
-      var alt = ar ? "عميل للكوتش منصور الغول" : "A client of Coach Mansour Elghoul";
-      return '<figure class="tr">' +
-        '<div class="pair">' +
-          '<div class="shot"><img src="assets/results/r' + r.n + '-before.webp" alt="' + alt + (ar ? " قبل" : ", before") + '" loading="lazy" decoding="async"><span>' + (ar ? "قبل" : "Before") + '</span></div>' +
-          '<div class="shot"><img src="assets/results/r' + r.n + '-after.webp" alt="' + alt + (ar ? " بعد" : ", after") + '" loading="lazy" decoding="async"><span class="after">' + (ar ? "بعد" : "After") + '</span></div>' +
-        '</div>' +
-        '<figcaption><b>' + r.big[ar ? "ar" : "en"] + '</b><span>' + line + '</span>' +
-          (r.extra ? '<em>' + r.extra[ar ? "ar" : "en"] + '</em>' : '') + '</figcaption>' +
-      '</figure>';
-    }).join("");
-    if (more) {
-      more.hidden = window.GHOUL_RESULTS.length <= SHOW;
-      more.textContent = open ? (ar ? "اعرض أقل" : "Show fewer") : (ar ? "شوف كل النتايج (" + window.GHOUL_RESULTS.length + ")" : "See all " + window.GHOUL_RESULTS.length + " results");
-    }
+  var SECONDS_PER_CARD = 7;
+  function card(r, ar, copy) {
+    var line = ar ? ("من " + r.from + " لـ " + r.to + " كجم · " + r.weeks + " أسبوع")
+                  : ('<span class="num">' + r.from + " → " + r.to + " kg</span> · " + r.weeks + " weeks");
+    var alt = copy ? "" : (ar ? "عميل للكوتش منصور الغول" : "A client of Coach Mansour Elghoul");
+    return '<figure class="tr"' + (copy ? ' aria-hidden="true"' : '') + '>' +
+      '<div class="pair">' +
+        '<div class="shot"><img src="assets/results/r' + r.n + '-before.webp" alt="' + alt + (alt ? (ar ? " قبل" : ", before") : "") + '" decoding="async" draggable="false"><span>' + (ar ? "قبل" : "Before") + '</span></div>' +
+        '<div class="shot"><img src="assets/results/r' + r.n + '-after.webp" alt="' + alt + (alt ? (ar ? " بعد" : ", after") : "") + '" decoding="async" draggable="false"><span class="after">' + (ar ? "بعد" : "After") + '</span></div>' +
+      '</div>' +
+      '<figcaption><b>' + r.big[ar ? "ar" : "en"] + '</b><span>' + line + '</span>' +
+        (r.extra ? '<em>' + r.extra[ar ? "ar" : "en"] + '</em>' : '') + '</figcaption>' +
+    '</figure>';
   }
-  if (more) more.addEventListener("click", function () {
-    open = !open; render();
-    if (!open) document.getElementById("results").scrollIntoView({ block: "start" });
-  });
+  function render() {
+    var ar = window.ghoulLang() === "ar", R = window.GHOUL_RESULTS;
+    grid.innerHTML = R.map(function (r) { return card(r, ar, false); }).join("") +
+                     R.map(function (r) { return card(r, ar, true); }).join("");
+    grid.style.setProperty("--marquee-time", (R.length * SECONDS_PER_CARD) + "s");
+  }
   document.addEventListener("ghoul:lang", render);
   render();
 })();
