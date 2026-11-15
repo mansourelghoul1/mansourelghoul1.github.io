@@ -218,8 +218,11 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
     <a class="btn" href="start.html"><span class="ar">ابدأ الفورم</span><span class="en">Start the form</span> <span class="arrow" aria-hidden="true">→</span></a>
   </div>
   <div class="video-card">
-    <video id="introVideo" poster="assets/intro/poster.webp" preload="metadata" playsinline>
-      <source src="assets/intro/intro.webm" type="video/webm">
+    <!-- H.264/AAC MP4 only: the one format that plays everywhere (every
+         phone, desktop browser and in-app browser). AV1/WebM used to be
+         offered first for smaller downloads, but devices that can't decode
+         AV1 got stuck instead of falling back, so it's gone. -->
+    <video id="introVideo" poster="assets/intro/poster.webp" preload="metadata" playsinline webkit-playsinline>
       <source src="assets/intro/intro.mp4" type="video/mp4">
       <span class="fallback"><span class="ar">المتصفح ده مش بيدعم تشغيل الفيديو. </span><span class="en">Your browser doesn't support video playback. </span><a href="assets/intro/intro.mp4"><span class="ar">نزّل الفيديو</span><span class="en">Download the video</span></a></span>
     </video>
