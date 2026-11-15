@@ -35,6 +35,18 @@
 .facts{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 26px;margin-top:38px;color:var(--bone-2);font-size:15px}
 .facts b{color:var(--bone);font-weight:500}
 
+/* intro video */
+.intro-video-wrap{display:grid;grid-template-columns:1.3fr .7fr;gap:60px;align-items:center}
+.intro-video-wrap .intro{margin:14px 0 26px}
+.video-card{position:relative;max-width:300px;margin-inline:auto;border-radius:28px;overflow:hidden;aspect-ratio:9/16;background:var(--night);box-shadow:0 30px 70px -30px rgba(0,0,0,.65)}
+.video-card video{display:block;width:100%;height:100%;object-fit:cover;background:var(--night)}
+.video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,6,14,.1);border:0;padding:0;cursor:pointer}
+.video-play .circle{width:78px;height:78px;border-radius:50%;background:var(--ember);color:var(--ember-ink);display:grid;place-items:center;box-shadow:0 14px 34px -10px rgba(0,0,0,.7);transition:transform .2s}
+.video-play:hover .circle{transform:scale(1.07)}
+.video-play svg{width:28px;height:28px;margin-inline-start:3px}
+.video-card .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--bone-2);font-size:14px}
+.video-card .fallback a{color:var(--ember)}
+
 /* who + what */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
@@ -139,13 +151,14 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
 
 @media (max-width:1060px){.steps{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:900px){
-  .two,.coach,.extras,.before,.plans{grid-template-columns:1fr}
+  .two,.coach,.extras,.before,.plans,.intro-video-wrap{grid-template-columns:1fr}
   .plans{max-width:520px}
   .pay{grid-template-columns:1fr}
 
   .steps{grid-template-columns:1fr 1fr}
   .cfacts{grid-template-columns:1fr 1fr}
   .coach .ph{order:-1;max-width:420px}
+  .video-card{order:-1;max-width:360px}
 }
 @media (max-width:560px){
   .plans,.steps{grid-template-columns:1fr}
@@ -153,6 +166,7 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
   .tr figcaption b{font-size:26px}
   .dur{display:flex}
   .dur button{flex:1;padding:10px 8px}
+  .video-card{max-width:100%}
 }
 </style>
 </head>
@@ -194,6 +208,25 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
   </div>
 </section>
 </div>
+
+<section id="intro-video"><div class="wrap intro-video-wrap">
+  <div>
+    <span class="kicker">Meet the coach</span>
+    <h2 class="h-display"><span class="ar">اسمعها من الكوتش</span><span class="en">Hear it from the coach</span></h2>
+    <p class="intro"><span class="ar">نص دقيقة تعرفك هنشتغل مع بعض إزاي وهتاخد إيه.</span><span class="en">A quick look at how we'll work together and what you'll get.</span></p>
+    <a class="btn" href="start.html"><span class="ar">ابدأ الفورم</span><span class="en">Start the form</span> <span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+  <div class="video-card">
+    <video id="introVideo" poster="assets/intro/poster.webp" preload="metadata" playsinline>
+      <source src="assets/intro/intro.webm" type="video/webm">
+      <source src="assets/intro/intro.mp4" type="video/mp4">
+      <span class="fallback"><span class="ar">المتصفح ده مش بيدعم تشغيل الفيديو. </span><span class="en">Your browser doesn't support video playback. </span><a href="assets/intro/intro.mp4"><span class="ar">نزّل الفيديو</span><span class="en">Download the video</span></a></span>
+    </video>
+    <button type="button" class="video-play" id="introPlay" aria-label="Play the intro video">
+      <span class="circle" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+    </button>
+  </div>
+</div></section>
 
 <section id="who" class="alt"><div class="wrap two">
   <div>
@@ -367,6 +400,16 @@ details p{color:var(--bone-2);margin-top:10px;max-width:760px}
 <script src="js/plans.js"></script>
 <script src="js/results.js"></script>
 <script>
+(function(){
+  // Intro video: poster + one big play button, full sound on first tap (never
+  // autoplay-muted). Native controls take over once it's playing.
+  var v=document.getElementById("introVideo"), btn=document.getElementById("introPlay");
+  if(v&&btn){
+    var start=function(){ v.controls=true; btn.hidden=true; v.play().catch(function(){ btn.hidden=false; }); };
+    btn.addEventListener("click", start);
+    v.addEventListener("play", function(){ v.controls=true; btn.hidden=true; }, {once:true});
+  }
+})();
 (function(){
   var P=window.GHOUL_PLANS, dur=P.defaultDuration;
   var durEl=document.getElementById("dur"), grid=document.getElementById("plansGrid");
